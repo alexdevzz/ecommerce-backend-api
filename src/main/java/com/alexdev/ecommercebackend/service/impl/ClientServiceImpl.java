@@ -1,56 +1,73 @@
 package com.alexdev.ecommercebackend.service.impl;
 
-import com.alexdev.ecommercebackend.model.dao.ClientDao;
-import com.alexdev.ecommercebackend.model.dto.ClientDto;
+import com.alexdev.ecommercebackend.constants.RegexExpresions;
+import com.alexdev.ecommercebackend.mapper.ClientMapper;
+import com.alexdev.ecommercebackend.repository.ClientRepository;
+import com.alexdev.ecommercebackend.model.dto.ClientDTO;
 import com.alexdev.ecommercebackend.model.entity.Client;
-import com.alexdev.ecommercebackend.service.IClientService;
+import com.alexdev.ecommercebackend.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
-public class ClientServiceImpl implements IClientService {
+public class ClientServiceImpl implements ClientService {
 
     @Autowired
-    private ClientDao clientDao;
+    private ClientRepository clientRepository;
+    @Autowired
+    private ClientMapper clientMapper;
+
 
     @Override
-    public List<Client> findAll() {
-        return (List) clientDao.findAll();
+    public List<ClientDTO> GetClients() {
+        return clientMapper.toClientDtos(clientRepository.findAll());
     }
 
-    @Transactional
     @Override
-    public Client save(ClientDto clientDto) {
-        Client client = Client.builder()
-                .id(clientDto.getId())
-                .name(clientDto.getName())
-                .lastName(clientDto.getLastName())
-                .registerDate(clientDto.getRegisterDate())
-                .email(clientDto.getEmail())
-                .phone(clientDto.getPhone())
-                .address(clientDto.getAddress())
-                .email(clientDto.getEmail())
-                .build();
-        return clientDao.save(client);
+    public ClientDTO save(ClientDTO clientDTO) {
+        clientDTO.setId(0);
+        clientDTO.setRegisterDate(new Date());
+
+        Client client = clientMapper.toClient(clientDTO);
+        return clientMapper.toClientDto(clientRepository.save(client));
     }
 
-    @Transactional(readOnly = true)
     @Override
-    public Client findById(int id) {
-        return clientDao.findById(id).orElse(null);
+    public ClientDTO update(int clientId, ClientDTO clientDTO) {
+        Client client = clientRepository.findById(clientId).get();
+        clientDTO.setId(clientId);
+        clientDTO.setRegisterDate(client.getRegisterDate());
+        clientMapper.updateClient(client, clientDTO);
+        return clientMapper.toClientDto(clientRepository.save(client));
     }
 
-    @Transactional
     @Override
-    public void delete(Client client) {
-        clientDao.delete(client);
+    public ClientDTO GetClient(int id) {
+        Client client = clientRepository.findById(id).get();
+        return clientMapper.toClientDto(client);
+    }
+
+    @Override
+    public ClientDTO delete(int id) {
+        Client client = clientRepository.findById(id).get();
+        ClientDTO clientDTO = clientMapper.toClientDto(client);
+        clientRepository.delete(client);
+        return clientDTO;
     }
 
     @Override
     public boolean existsById(int id) {
-        return clientDao.existsById(id);
+        return clientRepository.existsById(id);
     }
+
+
+
+
+
 }
