@@ -1,6 +1,6 @@
 package com.alexdev.ecommercebackend.controller;
 
-import com.alexdev.ecommercebackend.exceptions.GlobalExceptionHandler;
+import com.alexdev.ecommercebackend.exceptions.EmptyException;
 import com.alexdev.ecommercebackend.model.dto.ClientDTO;
 import com.alexdev.ecommercebackend.payload.MessageResponse;
 import com.alexdev.ecommercebackend.service.ClientService;
@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -20,7 +19,7 @@ public class ClientController {
     @Autowired
     private ClientService clientService;
 
-    // TODO validar si esta ya creado el cliente ...
+
     @PostMapping("clients")
     public ResponseEntity<?> create(@Valid @RequestBody ClientDTO clientDTO) {
         return new ResponseEntity<>(MessageResponse.builder()
@@ -50,19 +49,22 @@ public class ClientController {
     }
 
     @GetMapping("clients/{id}")
-    public ResponseEntity<?> showByID(@PathVariable int id) {
+    public ResponseEntity<?> getClient(@PathVariable int id) {
         return new ResponseEntity<>(MessageResponse.builder()
-                .message("client info obtained successfully")
+                .message("client retrieved successfully")
                 .data(clientService.GetClient(id))
                 .build()
                 , HttpStatus.OK);
     }
 
     @GetMapping("clients")
-    public ResponseEntity<?> showAll() {
+    public ResponseEntity<?> getAllClients() {
         List<ClientDTO> listClientDTO = clientService.GetClients();
+        if (listClientDTO.isEmpty()) {
+            throw new EmptyException("No clients found");
+        }
         return new ResponseEntity<>(MessageResponse.builder()
-                .message("clients info obtained successfully")
+                .message("clients retrieved successfully")
                 .count(listClientDTO.size())
                 .data(listClientDTO)
                 .build()

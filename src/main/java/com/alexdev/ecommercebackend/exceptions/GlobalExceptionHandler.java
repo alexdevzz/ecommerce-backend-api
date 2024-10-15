@@ -86,4 +86,19 @@ public class GlobalExceptionHandler {
                 .build()
                 , HttpStatus.NOT_ACCEPTABLE);
     }
+
+    @ExceptionHandler(value = EmptyException.class)
+    public ResponseEntity<?> handleNoResourceFoundException(EmptyException e) {
+
+        Map<String, String> mapErrors = new HashMap<>();
+
+        mapErrors.put("error", e.getMessage());
+
+        return new ResponseEntity<>(ErrorResponse.builder()
+                .status(HttpStatus.NOT_FOUND.value())
+                .type(HttpStatus.NOT_FOUND.getReasonPhrase())
+                .errors(mapErrors)
+                .build()
+                , HttpStatus.NOT_FOUND);
+    }
 }

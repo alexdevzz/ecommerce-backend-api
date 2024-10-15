@@ -1,6 +1,6 @@
-package com.alexdev.ecommercebackend.mapper.impl;
+package com.alexdev.ecommercebackend.model.mapper.impl;
 
-import com.alexdev.ecommercebackend.mapper.ClientMapper;
+import com.alexdev.ecommercebackend.model.mapper.ClientMapper;
 import com.alexdev.ecommercebackend.model.dto.ClientDTO;
 import com.alexdev.ecommercebackend.model.entity.Client;
 import org.springframework.stereotype.Component;

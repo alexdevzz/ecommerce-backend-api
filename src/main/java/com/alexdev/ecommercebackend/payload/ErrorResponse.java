@@ -19,6 +19,5 @@ public class ErrorResponse implements Serializable {
     @Builder.Default
     private String type = "Bad Request";
     @Builder.Default
-    Map<String, String> errors = new HashMap<>();
-
+    private Map<String, String> errors = new HashMap<>();
 }

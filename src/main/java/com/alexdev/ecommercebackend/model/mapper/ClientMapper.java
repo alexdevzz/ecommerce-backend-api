@@ -1,4 +1,4 @@
-package com.alexdev.ecommercebackend.mapper;
+package com.alexdev.ecommercebackend.model.mapper;
 
 import com.alexdev.ecommercebackend.model.dto.ClientDTO;
 import com.alexdev.ecommercebackend.model.entity.Client;

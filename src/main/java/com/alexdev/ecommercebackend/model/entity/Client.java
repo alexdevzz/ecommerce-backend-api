@@ -1,9 +1,7 @@
 package com.alexdev.ecommercebackend.model.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.*;
-import org.springframework.data.annotation.ReadOnlyProperty;
 
 import java.io.Serializable;
 import java.util.Date;

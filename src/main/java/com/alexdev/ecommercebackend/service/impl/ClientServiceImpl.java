@@ -1,19 +1,15 @@
 package com.alexdev.ecommercebackend.service.impl;
 
-import com.alexdev.ecommercebackend.constants.RegexExpresions;
-import com.alexdev.ecommercebackend.mapper.ClientMapper;
+import com.alexdev.ecommercebackend.model.mapper.ClientMapper;
 import com.alexdev.ecommercebackend.repository.ClientRepository;
 import com.alexdev.ecommercebackend.model.dto.ClientDTO;
 import com.alexdev.ecommercebackend.model.entity.Client;
 import com.alexdev.ecommercebackend.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Service
 public class ClientServiceImpl implements ClientService {
