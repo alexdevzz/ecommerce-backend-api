@@ -66,6 +66,16 @@ public class CategoryController {
                 , HttpStatus.OK);
     }
 
+    @GetMapping("categories/{id}")
+    public ResponseEntity<?> getCategory(@PathVariable int id) {
+        return new ResponseEntity<>(MessageResponse
+                .builder()
+                .message("category retrieved successfully")
+                .data(categoryService.getCategory(id))
+                .build()
+                , HttpStatus.OK);
+    }
+
 
 
 
