@@ -8,6 +8,7 @@ import com.alexdev.ecommercebackend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -26,6 +27,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductDTO save(ProductDTO productDTO) {
         productDTO.setId(0);
+        productDTO.setCreationDate(new Date());
         Product product = productMapper.toProduct(productDTO);
         return productMapper.toProductDto(productRepository.save(product));
     }

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -24,4 +25,7 @@ public class Category implements Serializable {
 
     @Column(name = "description")
     private String description;
+
+    @Column(name = "creation_date")
+    private Date creationDate;
 }

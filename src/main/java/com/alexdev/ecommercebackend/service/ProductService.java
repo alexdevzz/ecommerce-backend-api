@@ -1,6 +1,5 @@
 package com.alexdev.ecommercebackend.service;
 
-import com.alexdev.ecommercebackend.model.dto.ClientDTO;
 import com.alexdev.ecommercebackend.model.dto.ProductDTO;
 
 import java.util.List;

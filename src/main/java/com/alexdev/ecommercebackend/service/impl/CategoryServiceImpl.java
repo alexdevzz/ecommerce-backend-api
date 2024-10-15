@@ -8,6 +8,7 @@ import com.alexdev.ecommercebackend.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -32,6 +33,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryDTO save(CategoryDTO categoryDTO) {
         categoryDTO.setId(0);
+        categoryDTO.setCreationDate(new Date());
         Category category = categoryMapper.toCategory(categoryDTO);
         return categoryMapper.toCategoryDto(categoryRepository.save(category));
     }

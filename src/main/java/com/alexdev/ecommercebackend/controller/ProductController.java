@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/products")
 public class ProductController {
 
     @Autowired
     private ProductService productService;
 
-    @PostMapping("products")
+    @PostMapping("")
     public ResponseEntity<?> create(@Valid @RequestBody ProductDTO productDTO) {
         return new ResponseEntity<>(MessageResponse.builder()
                 .message("product created successfully")
@@ -28,7 +28,7 @@ public class ProductController {
                 , HttpStatus.CREATED);
     }
 
-    @PutMapping("products/{id}")
+    @PutMapping("{id}")
     public ResponseEntity<?> update(@PathVariable int id, @Valid @RequestBody ProductDTO productDTO) {
         return new ResponseEntity<>(MessageResponse
                 .builder()
@@ -38,7 +38,7 @@ public class ProductController {
                 , HttpStatus.CREATED);
     }
 
-    @DeleteMapping("products/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<?> delete(@PathVariable int id) {
         return new ResponseEntity<>(MessageResponse
                 .builder()
@@ -48,7 +48,7 @@ public class ProductController {
                 , HttpStatus.OK);
     }
 
-    @GetMapping("products/{id}")
+    @GetMapping("{id}")
     public ResponseEntity<?> getProduct(@PathVariable int id) {
         return new ResponseEntity<>(MessageResponse
                 .builder()
@@ -58,7 +58,7 @@ public class ProductController {
                 , HttpStatus.OK);
     }
 
-    @GetMapping("products")
+    @GetMapping("")
     public ResponseEntity<?> getAllProducts() {
         List<ProductDTO> listProductDTO = productService.getProducts();
         if (listProductDTO.isEmpty()) {

@@ -1,6 +1,10 @@
 package com.alexdev.ecommercebackend.model.dto;
 
 import com.alexdev.ecommercebackend.constants.RegexExpresions;
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.*;
 import lombok.*;
 import java.io.Serializable;
@@ -9,7 +13,7 @@ import java.util.Date;
 @Data
 @ToString
 @Builder
-public class ClientDTO implements Serializable {
+public class CustomerDTO implements Serializable {
 
     private int id;
 
@@ -29,9 +33,14 @@ public class ClientDTO implements Serializable {
     @Pattern(regexp = RegexExpresions.rgxEmail, message = "incorrect format")
     private String email;
 
-    private String address;
+    @NotBlank(message = "cannot be blank")
+    @NotNull(message = "cannot be null")
+    private String billingAddress;
 
-    private Date registerDate;
+    @NotBlank(message = "cannot be blank")
+    @NotNull(message = "cannot be null")
+    private String country;
 
+    private Date creationDate;
 
 }

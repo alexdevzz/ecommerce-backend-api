@@ -14,14 +14,14 @@ import java.io.Serializable;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/categories")
 public class CategoryController {
 
     @Autowired
     private CategoryService categoryService;
 
 
-    @PostMapping("categories")
+    @PostMapping("")
     public ResponseEntity<?> create(@Valid @RequestBody CategoryDTO categoryDTO) {
         return new ResponseEntity<>(MessageResponse
                 .builder()
@@ -31,7 +31,7 @@ public class CategoryController {
                 , HttpStatus.CREATED);
     }
 
-    @PutMapping("categories/{id}")
+    @PutMapping("{id}")
     public ResponseEntity<?> update(@Valid @RequestBody CategoryDTO categoryDTO, @PathVariable int id) {
         return new ResponseEntity<>(MessageResponse
                 .builder()
@@ -41,7 +41,7 @@ public class CategoryController {
                 , HttpStatus.CREATED);
     }
 
-    @DeleteMapping("categories/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<?> delete(@PathVariable int id) {
         return new ResponseEntity<>(MessageResponse
                 .builder()
@@ -51,7 +51,7 @@ public class CategoryController {
                 , HttpStatus.OK);
     }
 
-    @GetMapping("categories")
+    @GetMapping("")
     public ResponseEntity<?> getAllCategories() {
         List<CategoryDTO> listCategoryDTO = categoryService.getCategories();
         if (listCategoryDTO.isEmpty()) {
@@ -66,7 +66,7 @@ public class CategoryController {
                 , HttpStatus.OK);
     }
 
-    @GetMapping("categories/{id}")
+    @GetMapping("{id}")
     public ResponseEntity<?> getCategory(@PathVariable int id) {
         return new ResponseEntity<>(MessageResponse
                 .builder()

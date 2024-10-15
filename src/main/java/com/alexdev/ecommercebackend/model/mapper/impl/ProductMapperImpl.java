@@ -19,9 +19,13 @@ public class ProductMapperImpl implements ProductMapper {
 
         return Product.builder()
                 .id(productDTO.getId())
+                .sku(productDTO.getSku())
                 .name(productDTO.getName())
                 .description(productDTO.getDescription())
                 .price(productDTO.getPrice())
+                .weight(productDTO.getWeight())
+                .creationDate(productDTO.getCreationDate())
+                .stock(productDTO.getStock())
                 .build();
     }
 
@@ -33,9 +37,13 @@ public class ProductMapperImpl implements ProductMapper {
 
         return ProductDTO.builder()
                 .id(product.getId())
+                .sku(product.getSku())
                 .name(product.getName())
                 .description(product.getDescription())
                 .price(product.getPrice())
+                .weight(product.getWeight())
+                .creationDate(product.getCreationDate())
+                .stock(product.getStock())
                 .build();
     }
 
@@ -59,8 +67,12 @@ public class ProductMapperImpl implements ProductMapper {
         }
 
         product.setId(productDTO.getId());
+        product.setSku(productDTO.getSku());
         product.setName(productDTO.getName());
         product.setDescription(productDTO.getDescription());
         product.setPrice(productDTO.getPrice());
+        product.setWeight(productDTO.getWeight());
+        product.setCreationDate(productDTO.getCreationDate());
+        product.setStock(productDTO.getStock());
     }
 }

@@ -22,6 +22,7 @@ public class CategoryMapperImpl implements CategoryMapper {
                 .id(categoryDTO.getId())
                 .name(categoryDTO.getName())
                 .description(categoryDTO.getDescription())
+                .creationDate(categoryDTO.getCreationDate())
                 .build();
     }
 
@@ -35,6 +36,7 @@ public class CategoryMapperImpl implements CategoryMapper {
                 .id(category.getId())
                 .name(category.getName())
                 .description(category.getDescription())
+                .creationDate(category.getCreationDate())
                 .build();
     }
 
@@ -60,5 +62,6 @@ public class CategoryMapperImpl implements CategoryMapper {
         category.setId(categoryDTO.getId());
         category.setName(categoryDTO.getName());
         category.setDescription(categoryDTO.getDescription());
+        category.setCreationDate(categoryDTO.getCreationDate());
     }
 }

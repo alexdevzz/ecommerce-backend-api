@@ -12,28 +12,34 @@ import java.util.Date;
 @ToString
 @Builder
 @Entity
-@Table(name = "clients")
-public class Client implements Serializable {
+@Table(name = "customers")
+public class Customer implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_client")
+    @Column(name = "id_customer")
     private int id;
 
+    @Column(name = "name")
     private String name;
 
     @Column(name = "last_name")
     private String lastName;
 
+    @Column(name = "phone")
     private String phone;
 
     @Column(name = "email", unique = true)
     private String email;
 
-    private String address;
+    @Column(name = "billing_address")
+    private String billingAddress;
 
-    @Column(name = "register_date")
-    private Date registerDate = new Date();
+    @Column(name = "country")
+    private String country;
+
+    @Column(name = "creation_date")
+    private Date creationDate;
 
 
 }

@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.ToString;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @Data
 @ToString
@@ -20,4 +21,6 @@ public class CategoryDTO implements Serializable {
     private String name;
 
     private String description;
+
+    private Date creationDate;
 }

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -19,6 +20,9 @@ public class Product implements Serializable {
     @Column(name = "id_product")
     private int id;
 
+    @Column(name = "sku", unique = true)
+    private String sku;
+
     @Column(name = "name")
     private String name;
 
@@ -26,6 +30,14 @@ public class Product implements Serializable {
     private String description;
 
     @Column(name = "price")
-    private float price;
+    private double price;
 
+    @Column(name = "weight")
+    private double weight;
+
+    @Column(name = "creation_date")
+    private Date creationDate;
+
+    @Column(name = "stock")
+    private int stock;
 }

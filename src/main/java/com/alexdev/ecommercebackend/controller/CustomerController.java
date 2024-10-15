@@ -1,9 +1,9 @@
 package com.alexdev.ecommercebackend.controller;
 
 import com.alexdev.ecommercebackend.exceptions.EmptyException;
-import com.alexdev.ecommercebackend.model.dto.ClientDTO;
+import com.alexdev.ecommercebackend.model.dto.CustomerDTO;
 import com.alexdev.ecommercebackend.payload.MessageResponse;
-import com.alexdev.ecommercebackend.service.ClientService;
+import com.alexdev.ecommercebackend.service.CustomerService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,60 +13,60 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1")
-public class ClientController {
+@RequestMapping("/api/v1/customers")
+public class CustomerController {
 
     @Autowired
-    private ClientService clientService;
+    private CustomerService customerService;
 
 
-    @PostMapping("clients")
-    public ResponseEntity<?> create(@Valid @RequestBody ClientDTO clientDTO) {
+    @PostMapping("")
+    public ResponseEntity<?> create(@Valid @RequestBody CustomerDTO customerDTO) {
         return new ResponseEntity<>(MessageResponse.builder()
                 .message("client created successfully")
-                .data(clientService.save(clientDTO))
+                .data(customerService.save(customerDTO))
                 .build()
                 , HttpStatus.CREATED);
     }
 
-    @PutMapping("clients/{id}")
-    public ResponseEntity<?> update(@Valid @RequestBody ClientDTO clientDTO, @PathVariable int id) {
+    @PutMapping("{id}")
+    public ResponseEntity<?> update(@Valid @RequestBody CustomerDTO customerDTO, @PathVariable int id) {
         return new ResponseEntity<>(MessageResponse.builder()
                 .message("client updated successfully")
-                .data(clientService.update(id, clientDTO))
+                .data(customerService.update(id, customerDTO))
                 .build()
                 , HttpStatus.CREATED);
 
     }
 
-    @DeleteMapping("clients/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<?> delete(@PathVariable int id) {
         return new ResponseEntity<>(MessageResponse.builder()
                 .message("client deleted successfully")
-                .data(clientService.delete(id))
+                .data(customerService.delete(id))
                 .build()
                 , HttpStatus.OK);
     }
 
-    @GetMapping("clients/{id}")
+    @GetMapping("{id}")
     public ResponseEntity<?> getClient(@PathVariable int id) {
         return new ResponseEntity<>(MessageResponse.builder()
                 .message("client retrieved successfully")
-                .data(clientService.GetClient(id))
+                .data(customerService.GetCustomer(id))
                 .build()
                 , HttpStatus.OK);
     }
 
-    @GetMapping("clients")
+    @GetMapping("")
     public ResponseEntity<?> getAllClients() {
-        List<ClientDTO> listClientDTO = clientService.GetClients();
-        if (listClientDTO.isEmpty()) {
+        List<CustomerDTO> listCustomerDTO = customerService.GetCustomers();
+        if (listCustomerDTO.isEmpty()) {
             throw new EmptyException("No clients found");
         }
         return new ResponseEntity<>(MessageResponse.builder()
                 .message("clients retrieved successfully")
-                .count(listClientDTO.size())
-                .data(listClientDTO)
+                .count(listCustomerDTO.size())
+                .data(listCustomerDTO)
                 .build()
                 , HttpStatus.OK);
     }
