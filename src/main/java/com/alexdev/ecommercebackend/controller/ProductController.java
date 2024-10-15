@@ -2,7 +2,6 @@ package com.alexdev.ecommercebackend.controller;
 
 import com.alexdev.ecommercebackend.exceptions.EmptyException;
 import com.alexdev.ecommercebackend.model.dto.ProductDTO;
-import com.alexdev.ecommercebackend.model.entity.Product;
 import com.alexdev.ecommercebackend.payload.MessageResponse;
 import com.alexdev.ecommercebackend.service.ProductService;
 import jakarta.validation.Valid;
