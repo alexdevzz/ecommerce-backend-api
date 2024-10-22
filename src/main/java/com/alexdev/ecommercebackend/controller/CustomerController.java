@@ -49,7 +49,7 @@ public class CustomerController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<?> getClient(@PathVariable int id) {
+    public ResponseEntity<?> getCustomer(@PathVariable int id) {
         return new ResponseEntity<>(MessageResponse.builder()
                 .message("client retrieved successfully")
                 .data(customerService.GetCustomer(id))
@@ -58,8 +58,8 @@ public class CustomerController {
     }
 
     @GetMapping("")
-    public ResponseEntity<?> getAllClients() {
-        List<CustomerDTO> listCustomerDTO = customerService.GetCustomers();
+    public ResponseEntity<?> getAllCustomers() {
+        List<CustomerDTO> listCustomerDTO = customerService.getCustomers();
         if (listCustomerDTO.isEmpty()) {
             throw new EmptyException("No clients found");
         }

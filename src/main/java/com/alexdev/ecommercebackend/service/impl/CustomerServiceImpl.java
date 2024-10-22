@@ -21,7 +21,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 
     @Override
-    public List<CustomerDTO> GetCustomers() {
+    public List<CustomerDTO> getCustomers() {
         return customerMapper.toCustomerDtos(customerRepository.findAll());
     }
 

@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface CustomerService {
 
-    List<CustomerDTO> GetCustomers();
+    List<CustomerDTO> getCustomers();
 
     CustomerDTO save(CustomerDTO customerDTO);
 
