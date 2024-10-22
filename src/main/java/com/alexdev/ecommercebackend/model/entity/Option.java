@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -25,4 +26,15 @@ public class Option implements Serializable {
 
     @Column(name = "creation_date")
     private Date creationDate;
+
+
+    @ManyToMany(mappedBy = "options")
+    private List<Product> products;
+
+
+
+
+
+
+
 }

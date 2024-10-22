@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -40,4 +41,32 @@ public class Product implements Serializable {
 
     @Column(name = "stock")
     private int stock;
+
+
+    @ManyToMany
+    @JoinTable(
+            name = "product_rel_option",
+            joinColumns = @JoinColumn(name = "fk_product"),
+            inverseJoinColumns = @JoinColumn(name = "fk_option")
+    )
+    private List<Option> options;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
