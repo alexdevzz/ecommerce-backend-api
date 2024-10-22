@@ -51,6 +51,14 @@ public class Product implements Serializable {
     )
     private List<Option> options;
 
+    @ManyToMany
+    @JoinTable(
+            name = "product_rel_category",
+            joinColumns = @JoinColumn(name = "fk_product"),
+            inverseJoinColumns = @JoinColumn(name = "fk_category")
+    )
+    private List<Category> categories;
+
 
 
 
