@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -42,4 +43,6 @@ public class Customer implements Serializable {
     private Date creationDate;
 
 
+    @OneToMany(mappedBy = "customer")
+    private List<Order> orders;
 }

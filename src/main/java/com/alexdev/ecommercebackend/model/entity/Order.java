@@ -30,4 +30,11 @@ public class Order implements Serializable {
 
     @Column(name = "order_email")
     private String orderEmail;
+
+
+    @ManyToOne
+    @JoinColumn(name = "fk_customer")
+    private Customer customer;
+
+
 }
