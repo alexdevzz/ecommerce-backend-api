@@ -60,6 +60,10 @@ public class Product implements Serializable {
     private List<Category> categories;
 
 
+    @OneToMany(mappedBy = "product")
+    private List<OrderDetails> ordersDetails;
+
+
 
 
 

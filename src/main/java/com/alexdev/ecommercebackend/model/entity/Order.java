@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -38,6 +39,9 @@ public class Order implements Serializable {
     @ManyToOne
     @JoinColumn(name = "fk_customer")
     private Customer customer;
+
+    @OneToMany(mappedBy = "order")
+    private List<OrderDetails> ordersDetails;
 
 
 }

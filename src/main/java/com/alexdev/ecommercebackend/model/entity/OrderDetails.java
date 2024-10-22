@@ -27,4 +27,13 @@ public class OrderDetails implements Serializable {
 
     @Column(name = "quantity")
     private int quantity;
+
+
+    @ManyToOne
+    @JoinColumn(name = "fk_product")
+    private Product product;
+
+    @ManyToOne
+    @JoinColumn(name = "fk_order")
+    private Order order;
 }
