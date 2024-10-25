@@ -52,4 +52,8 @@ public class OrderDates implements Serializable {
 
     @Column(name = "order_delivered_date")
     private Date orderDeliveredDate;
+
+
+    @OneToOne(mappedBy = "orderDates")
+    private Order order;
 }
