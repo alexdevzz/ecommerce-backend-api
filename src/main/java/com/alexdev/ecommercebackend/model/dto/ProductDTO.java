@@ -1,5 +1,8 @@
 package com.alexdev.ecommercebackend.model.dto;
 
+import com.alexdev.ecommercebackend.model.entity.Category;
+import com.alexdev.ecommercebackend.model.entity.Option;
+import com.alexdev.ecommercebackend.model.entity.OrderDetails;
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,6 +14,7 @@ import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @ToString
@@ -42,5 +46,12 @@ public class ProductDTO implements Serializable {
     @NotNull(message = "cannot be null")
     @PositiveOrZero
     private int stock;
+
+
+    private List<Option> options;
+
+    private List<Category> categories;
+
+    private List<OrderDetails> ordersDetails;
 
 }

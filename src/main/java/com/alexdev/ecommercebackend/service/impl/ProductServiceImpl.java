@@ -6,6 +6,9 @@ import com.alexdev.ecommercebackend.model.mapper.ProductMapper;
 import com.alexdev.ecommercebackend.repository.ProductRepository;
 import com.alexdev.ecommercebackend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -20,8 +23,8 @@ public class ProductServiceImpl implements ProductService {
     private ProductMapper productMapper;
 
     @Override
-    public List<ProductDTO> getProducts() {
-        return productMapper.toProductDtos(productRepository.findAll());
+    public List<ProductDTO> getProducts(Pageable pageable) {
+        return productMapper.toProductDtos(productRepository.findAll(pageable).getContent());
     }
 
     @Override
@@ -57,5 +60,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public boolean existsById(int id) {
         return productRepository.existsById(id);
+    }
+
+    @Override
+    public int count() {
+        return (int) productRepository.count();
     }
 }

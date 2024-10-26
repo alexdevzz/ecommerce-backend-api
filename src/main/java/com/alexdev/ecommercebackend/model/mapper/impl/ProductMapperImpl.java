@@ -26,6 +26,9 @@ public class ProductMapperImpl implements ProductMapper {
                 .weight(productDTO.getWeight())
                 .creationDate(productDTO.getCreationDate())
                 .stock(productDTO.getStock())
+                .options(productDTO.getOptions())
+                .categories(productDTO.getCategories())
+                .ordersDetails(productDTO.getOrdersDetails())
                 .build();
     }
 
@@ -44,6 +47,9 @@ public class ProductMapperImpl implements ProductMapper {
                 .weight(product.getWeight())
                 .creationDate(product.getCreationDate())
                 .stock(product.getStock())
+                .options(product.getOptions())
+                .categories(product.getCategories())
+                .ordersDetails(product.getOrdersDetails())
                 .build();
     }
 
@@ -74,5 +80,8 @@ public class ProductMapperImpl implements ProductMapper {
         product.setWeight(productDTO.getWeight());
         product.setCreationDate(productDTO.getCreationDate());
         product.setStock(productDTO.getStock());
+        product.setOptions(productDTO.getOptions());
+        product.setCategories(productDTO.getCategories());
+        product.setOrdersDetails(productDTO.getOrdersDetails());
     }
 }
