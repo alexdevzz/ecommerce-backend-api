@@ -6,6 +6,7 @@ import com.alexdev.ecommercebackend.model.mapper.OrderDetailsMapper;
 import com.alexdev.ecommercebackend.repository.OrderDetailsRepository;
 import com.alexdev.ecommercebackend.service.OrderDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,13 +21,15 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
 
 
     @Override
-    public List<OrderDetailsDTO> getOrdersDetails() {
-        return orderDetailsMapper.toOrderDetailsDTOs(orderDetailsRepository.findAll());
+    public List<OrderDetailsDTO> getOrdersDetails(Pageable pageable) {
+        return orderDetailsMapper.toOrderDetailsDTOs(orderDetailsRepository.findAll(pageable).getContent());
     }
 
     @Override
     public OrderDetailsDTO save(OrderDetailsDTO orderDetailsDTO) {
         orderDetailsDTO.setId(0);
+        orderDetailsDTO.setOrder(null);
+        orderDetailsDTO.setProduct(null);
         OrderDetails orderDetails = orderDetailsMapper.toOrderDetails(orderDetailsDTO);
         return orderDetailsMapper.toOrderDetailsDTO(orderDetailsRepository.save(orderDetails));
     }
@@ -56,5 +59,10 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
     @Override
     public boolean existsByid(int id) {
         return orderDetailsRepository.existsById(id);
+    }
+
+    @Override
+    public int count() {
+        return (int) orderDetailsRepository.count();
     }
 }

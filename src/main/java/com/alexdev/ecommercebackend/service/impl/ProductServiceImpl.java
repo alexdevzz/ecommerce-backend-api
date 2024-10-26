@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -31,6 +32,9 @@ public class ProductServiceImpl implements ProductService {
     public ProductDTO save(ProductDTO productDTO) {
         productDTO.setId(0);
         productDTO.setCreationDate(new Date());
+        productDTO.setOptions(new ArrayList<>());
+        productDTO.setCategories(new ArrayList<>());
+        productDTO.setOrdersDetails(new ArrayList<>());
         Product product = productMapper.toProduct(productDTO);
         return productMapper.toProductDto(productRepository.save(product));
     }

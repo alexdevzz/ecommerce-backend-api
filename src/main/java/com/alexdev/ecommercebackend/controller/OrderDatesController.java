@@ -3,10 +3,14 @@ package com.alexdev.ecommercebackend.controller;
 import com.alexdev.ecommercebackend.exceptions.EmptyException;
 import com.alexdev.ecommercebackend.model.dto.OrderDatesDTO;
 import com.alexdev.ecommercebackend.model.dto.ProductDTO;
+import com.alexdev.ecommercebackend.payload.ListMessageResponse;
 import com.alexdev.ecommercebackend.payload.MessageResponse;
 import com.alexdev.ecommercebackend.service.OrderDatesService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -61,14 +65,17 @@ public class OrderDatesController {
     }
 
     @GetMapping("")
-    public ResponseEntity<?> getAllOrdersDates() {
-        List<OrderDatesDTO> listOrderDatesDTO = orderDatesService.getOrdersDates();
+    public ResponseEntity<?> getAllOrdersDates(@PageableDefault(page = 0, size = 10, sort = "creationDate", direction = Sort.Direction.DESC) Pageable pageable) {
+        List<OrderDatesDTO> listOrderDatesDTO = orderDatesService.getOrdersDates(pageable);
         if (listOrderDatesDTO.isEmpty()) {
             throw new EmptyException("No orders dates found");
         }
-        return new ResponseEntity<>(MessageResponse
+        return new ResponseEntity<>(ListMessageResponse
                 .builder()
                 .message("orders dates retrieved successfully")
+                .sort(pageable.getSort().toString())
+                .page(pageable.getPageNumber())
+                .total(orderDatesService.count())
                 .count(listOrderDatesDTO.size())
                 .data(listOrderDatesDTO)
                 .build()

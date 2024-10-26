@@ -8,6 +8,7 @@ import com.alexdev.ecommercebackend.model.mapper.OrderDatesMapper;
 import com.alexdev.ecommercebackend.repository.OrderDatesRepository;
 import com.alexdev.ecommercebackend.service.OrderDatesService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -23,14 +24,15 @@ public class OrderDatesServiceImpl implements OrderDatesService {
 
 
     @Override
-    public List<OrderDatesDTO> getOrdersDates() {
-        return orderDatesMapper.toOrderDatesDTOs(orderDatesRepository.findAll());
+    public List<OrderDatesDTO> getOrdersDates(Pageable pageable) {
+        return orderDatesMapper.toOrderDatesDTOs(orderDatesRepository.findAll(pageable).getContent());
     }
 
     @Override
     public OrderDatesDTO create(OrderDatesDTO orderDatesDTO) {
         orderDatesDTO.setId(0);
         orderDatesDTO.setCreationDate(new Date());
+        orderDatesDTO.setOrder(null);
         OrderDates orderDates = orderDatesMapper.toOrderDates(orderDatesDTO);
         return orderDatesMapper.toOrderDatesDTO(orderDatesRepository.save(orderDates));
     }
@@ -60,5 +62,10 @@ public class OrderDatesServiceImpl implements OrderDatesService {
     @Override
     public boolean existsByid(int id) {
         return orderDatesRepository.existsById(id);
+    }
+
+    @Override
+    public int count() {
+        return (int) orderDatesRepository.count();
     }
 }

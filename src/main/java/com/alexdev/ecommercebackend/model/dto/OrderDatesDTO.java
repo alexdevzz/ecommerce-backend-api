@@ -1,5 +1,6 @@
 package com.alexdev.ecommercebackend.model.dto;
 
+import com.alexdev.ecommercebackend.model.entity.Order;
 import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
@@ -35,5 +36,9 @@ public class OrderDatesDTO implements Serializable {
     private Date inDeliveryRouteDate;
 
     private Date orderDeliveredDate;
+
+
+    private Order order;
+
 
 }

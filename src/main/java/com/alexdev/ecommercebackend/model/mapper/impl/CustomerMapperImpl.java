@@ -26,6 +26,7 @@ public class CustomerMapperImpl implements CustomerMapper {
                 .phone(customerDto.getPhone())
                 .country(customerDto.getCountry())
                 .billingAddress(customerDto.getBillingAddress())
+                .orders(customerDto.getOrders())
                 .build();
     }
 
@@ -45,6 +46,7 @@ public class CustomerMapperImpl implements CustomerMapper {
                 .phone(customer.getPhone())
                 .billingAddress(customer.getBillingAddress())
                 .country(customer.getCountry())
+                .orders(customer.getOrders())
                 .build();
     }
 
@@ -76,6 +78,7 @@ public class CustomerMapperImpl implements CustomerMapper {
         customer.setPhone(customerDto.getPhone());
         customer.setBillingAddress( customerDto.getBillingAddress());
         customer.setCountry(customerDto.getCountry());
+        customer.setOrders(customerDto.getOrders());
 
     }
 }

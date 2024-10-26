@@ -1,12 +1,13 @@
 package com.alexdev.ecommercebackend.service;
 
 import com.alexdev.ecommercebackend.model.dto.OrderDTO;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface OrderService {
 
-    List<OrderDTO> getOrders();
+    List<OrderDTO> getOrders(Pageable pageable);
 
     OrderDTO save(OrderDTO orderDTO);
 
@@ -17,4 +18,6 @@ public interface OrderService {
     OrderDTO delete(int OrderDTOId);
 
     boolean existsByid(int id);
+
+    int count();
 }

@@ -29,6 +29,7 @@ public class OrderDatesMapperImpl implements OrderDatesMapper {
                 .readyToSendDate(orderDatesDTO.getReadyToSendDate())
                 .inDeliveryRouteDate(orderDatesDTO.getInDeliveryRouteDate())
                 .orderDeliveredDate(orderDatesDTO.getOrderDeliveredDate())
+                .order(orderDatesDTO.getOrder())
                 .build();
     }
 
@@ -51,6 +52,7 @@ public class OrderDatesMapperImpl implements OrderDatesMapper {
                 .readyToSendDate(orderDates.getReadyToSendDate())
                 .inDeliveryRouteDate(orderDates.getInDeliveryRouteDate())
                 .orderDeliveredDate(orderDates.getOrderDeliveredDate())
+                .order(orderDates.getOrder())
                 .build();
     }
 
@@ -83,6 +85,7 @@ public class OrderDatesMapperImpl implements OrderDatesMapper {
         orderDates.setInDeliveryRouteDate(orderDatesDTO.getInDeliveryRouteDate());
         orderDates.setOrderDeliveredDate(orderDatesDTO.getOrderDeliveredDate());
         orderDates.setWarehouseDestinyReceptionDate(orderDatesDTO.getWarehouseDestinyReceptionDate());
+        orderDates.setOrder(orderDatesDTO.getOrder());
 
     }
 }

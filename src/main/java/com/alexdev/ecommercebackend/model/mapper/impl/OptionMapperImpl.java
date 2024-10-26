@@ -20,6 +20,7 @@ public class OptionMapperImpl implements OptionMapper {
                 .id(optionDTO.getId())
                 .name(optionDTO.getName())
                 .creationDate(optionDTO.getCreationDate())
+                .products(optionDTO.getProducts())
                 .build();
     }
 
@@ -32,6 +33,7 @@ public class OptionMapperImpl implements OptionMapper {
                 .id(option.getId())
                 .name(option.getName())
                 .creationDate(option.getCreationDate())
+                .products(option.getProducts())
                 .build();
     }
 
@@ -55,5 +57,6 @@ public class OptionMapperImpl implements OptionMapper {
         option.setId(optionDTO.getId());
         option.setName(optionDTO.getName());
         option.setCreationDate(optionDTO.getCreationDate());
+        option.setProducts(optionDTO.getProducts());
     }
 }

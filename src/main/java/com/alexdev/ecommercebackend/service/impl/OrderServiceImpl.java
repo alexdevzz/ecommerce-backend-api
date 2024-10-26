@@ -6,8 +6,10 @@ import com.alexdev.ecommercebackend.model.mapper.OrderMapper;
 import com.alexdev.ecommercebackend.repository.OrderRepository;
 import com.alexdev.ecommercebackend.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,13 +22,16 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public List<OrderDTO> getOrders() {
-        return orderMapper.toOrderDTOs(orderRepository.findAll());
+    public List<OrderDTO> getOrders(Pageable pageable) {
+        return orderMapper.toOrderDTOs(orderRepository.findAll(pageable).getContent());
     }
 
     @Override
     public OrderDTO save(OrderDTO orderDTO) {
         orderDTO.setId(0);
+        orderDTO.setCustomer(null);
+        orderDTO.setOrdersDetails(new ArrayList<>());
+        orderDTO.setOrderDates(null);
         Order order = orderMapper.toOrder(orderDTO);
         return orderMapper.toOrderDTO(orderRepository.save(order));
     }
@@ -56,5 +61,10 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public boolean existsByid(int id) {
         return orderRepository.existsById(id);
+    }
+
+    @Override
+    public int count() {
+        return (int) orderRepository.count();
     }
 }

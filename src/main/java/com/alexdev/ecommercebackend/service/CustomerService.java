@@ -1,12 +1,13 @@
 package com.alexdev.ecommercebackend.service;
 
 import com.alexdev.ecommercebackend.model.dto.CustomerDTO;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface CustomerService {
 
-    List<CustomerDTO> getCustomers();
+    List<CustomerDTO> getCustomers(Pageable pageable);
 
     CustomerDTO save(CustomerDTO customerDTO);
 
@@ -18,5 +19,5 @@ public interface CustomerService {
 
     boolean existsById(int id);
 
-
+    int count();
 }

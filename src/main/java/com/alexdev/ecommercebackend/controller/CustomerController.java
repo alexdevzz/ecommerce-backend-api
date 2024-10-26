@@ -2,10 +2,14 @@ package com.alexdev.ecommercebackend.controller;
 
 import com.alexdev.ecommercebackend.exceptions.EmptyException;
 import com.alexdev.ecommercebackend.model.dto.CustomerDTO;
+import com.alexdev.ecommercebackend.payload.ListMessageResponse;
 import com.alexdev.ecommercebackend.payload.MessageResponse;
 import com.alexdev.ecommercebackend.service.CustomerService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -58,13 +62,16 @@ public class CustomerController {
     }
 
     @GetMapping("")
-    public ResponseEntity<?> getAllCustomers() {
-        List<CustomerDTO> listCustomerDTO = customerService.getCustomers();
+    public ResponseEntity<?> getAllCustomers(@PageableDefault(page = 0, size = 10, sort = "creationDate", direction = Sort.Direction.DESC) Pageable pageable) {
+        List<CustomerDTO> listCustomerDTO = customerService.getCustomers(pageable);
         if (listCustomerDTO.isEmpty()) {
             throw new EmptyException("No clients found");
         }
-        return new ResponseEntity<>(MessageResponse.builder()
-                .message("clients retrieved successfully")
+        return new ResponseEntity<>(ListMessageResponse
+                .builder()
+                .sort(pageable.getSort().toString())
+                .page(pageable.getPageNumber())
+                .total(customerService.count())
                 .count(listCustomerDTO.size())
                 .data(listCustomerDTO)
                 .build()

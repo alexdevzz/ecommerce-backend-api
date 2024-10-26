@@ -1,5 +1,7 @@
 package com.alexdev.ecommercebackend.model.dto;
 
+import com.alexdev.ecommercebackend.model.entity.Order;
+import com.alexdev.ecommercebackend.model.entity.Product;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -29,4 +31,9 @@ public class OrderDetailsDTO implements Serializable {
     @NotNull(message = "cannot be null")
     @PositiveOrZero
     private int quantity;
+
+
+    private Product product;
+
+    private Order order;
 }

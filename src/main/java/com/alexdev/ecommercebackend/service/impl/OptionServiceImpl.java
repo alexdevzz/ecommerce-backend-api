@@ -6,8 +6,10 @@ import com.alexdev.ecommercebackend.model.mapper.OptionMapper;
 import com.alexdev.ecommercebackend.repository.OptionRepository;
 import com.alexdev.ecommercebackend.service.OptionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -21,14 +23,15 @@ public class OptionServiceImpl implements OptionService {
 
 
     @Override
-    public List<OptionDTO> getOptions() {
-        return optionMapper.toOptionDtos(optionRepository.findAll());
+    public List<OptionDTO> getOptions(Pageable pageable) {
+        return optionMapper.toOptionDtos(optionRepository.findAll(pageable).getContent());
     }
 
     @Override
     public OptionDTO save(OptionDTO optionDTO) {
         optionDTO.setId(0);
         optionDTO.setCreationDate(new Date());
+        optionDTO.setProducts(new ArrayList<>());
         Option option = optionMapper.toOption(optionDTO);
         return optionMapper.toOptionDto(optionRepository.save(option));
     }
@@ -58,5 +61,10 @@ public class OptionServiceImpl implements OptionService {
     @Override
     public boolean existsById(int id) {
         return optionRepository.existsById(id);
+    }
+
+    @Override
+    public int count() {
+        return (int) optionRepository.count();
     }
 }

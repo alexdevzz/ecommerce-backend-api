@@ -2,10 +2,14 @@ package com.alexdev.ecommercebackend.controller;
 
 import com.alexdev.ecommercebackend.exceptions.EmptyException;
 import com.alexdev.ecommercebackend.model.dto.OptionDTO;
+import com.alexdev.ecommercebackend.payload.ListMessageResponse;
 import com.alexdev.ecommercebackend.payload.MessageResponse;
 import com.alexdev.ecommercebackend.service.OptionService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -56,15 +60,18 @@ public class OptionController {
     }
 
     @GetMapping("")
-    public ResponseEntity<?> getAllOptions() {
-        List<OptionDTO> listOptionDTO = optionService.getOptions();
+    public ResponseEntity<?> getAllOptions(@PageableDefault(page = 0, size = 10, sort = "creationDate", direction = Sort.Direction.DESC) Pageable pageable) {
+        List<OptionDTO> listOptionDTO = optionService.getOptions(pageable);
         if (listOptionDTO.isEmpty()) {
             throw new EmptyException("No options found");
         }
-        return new ResponseEntity<>(MessageResponse.builder()
+        return new ResponseEntity<>(ListMessageResponse.builder()
                 .message("options retrieved successfully")
-                .data(listOptionDTO)
+                .sort(pageable.getSort().toString())
+                .page(pageable.getPageNumber())
+                .total(optionService.count())
                 .count(listOptionDTO.size())
+                .data(listOptionDTO)
                 .build()
                 , HttpStatus.OK);
     }

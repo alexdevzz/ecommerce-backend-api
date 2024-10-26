@@ -23,6 +23,9 @@ public class OrderMapperImpl implements OrderMapper {
                 .shippingAddress(orderDTO.getShippingAddress())
                 .orderAddress(orderDTO.getOrderAddress())
                 .orderEmail(orderDTO.getOrderEmail())
+                .ordersDetails(orderDTO.getOrdersDetails())
+                .customer(orderDTO.getCustomer())
+                .orderDates(orderDTO.getOrderDates())
                 .build();
     }
 
@@ -38,6 +41,9 @@ public class OrderMapperImpl implements OrderMapper {
                 .shippingAddress(order.getShippingAddress())
                 .orderAddress(order.getOrderAddress())
                 .orderEmail(order.getOrderEmail())
+                .ordersDetails(order.getOrdersDetails())
+                .customer(order.getCustomer())
+                .orderDates(order.getOrderDates())
                 .build();
     }
 
@@ -64,5 +70,8 @@ public class OrderMapperImpl implements OrderMapper {
         order.setShippingAddress(orderDTO.getShippingAddress());
         order.setOrderAddress(orderDTO.getOrderAddress());
         order.setOrderEmail(orderDTO.getOrderEmail());
+        order.setOrdersDetails(orderDTO.getOrdersDetails());
+        order.setCustomer(orderDTO.getCustomer());
+        order.setOrderDates(orderDTO.getOrderDates());
     }
 }

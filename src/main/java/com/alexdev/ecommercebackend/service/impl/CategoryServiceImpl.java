@@ -6,8 +6,10 @@ import com.alexdev.ecommercebackend.model.mapper.CategoryMapper;
 import com.alexdev.ecommercebackend.repository.CategoryRepository;
 import com.alexdev.ecommercebackend.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -20,8 +22,8 @@ public class CategoryServiceImpl implements CategoryService {
     private CategoryMapper categoryMapper;
 
     @Override
-    public List<CategoryDTO> getCategories() {
-        return categoryMapper.toCategoryDtos(categoryRepository.findAll());
+    public List<CategoryDTO> getCategories(Pageable pageable) {
+        return categoryMapper.toCategoryDtos(categoryRepository.findAll(pageable).getContent());
     }
 
     @Override
@@ -34,6 +36,7 @@ public class CategoryServiceImpl implements CategoryService {
     public CategoryDTO save(CategoryDTO categoryDTO) {
         categoryDTO.setId(0);
         categoryDTO.setCreationDate(new Date());
+        categoryDTO.setProducts(new ArrayList<>());
         Category category = categoryMapper.toCategory(categoryDTO);
         return categoryMapper.toCategoryDto(categoryRepository.save(category));
     }
@@ -57,5 +60,10 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public boolean existsById(int id) {
         return categoryRepository.existsById(id);
+    }
+
+    @Override
+    public int count() {
+        return (int) categoryRepository.count();
     }
 }

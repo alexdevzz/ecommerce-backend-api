@@ -6,8 +6,10 @@ import com.alexdev.ecommercebackend.model.dto.CustomerDTO;
 import com.alexdev.ecommercebackend.model.entity.Customer;
 import com.alexdev.ecommercebackend.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -21,15 +23,15 @@ public class CustomerServiceImpl implements CustomerService {
 
 
     @Override
-    public List<CustomerDTO> getCustomers() {
-        return customerMapper.toCustomerDtos(customerRepository.findAll());
+    public List<CustomerDTO> getCustomers(Pageable pageable) {
+        return customerMapper.toCustomerDtos(customerRepository.findAll(pageable).getContent());
     }
 
     @Override
     public CustomerDTO save(CustomerDTO customerDTO) {
         customerDTO.setId(0);
         customerDTO.setCreationDate(new Date());
-
+        customerDTO.setOrders(new ArrayList<>());
         Customer customer = customerMapper.toCustomer(customerDTO);
         return customerMapper.toCustomerDto(customerRepository.save(customer));
     }
@@ -62,8 +64,10 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRepository.existsById(id);
     }
 
-
-
+    @Override
+    public int count() {
+        return (int) customerRepository.count();
+    }
 
 
 }

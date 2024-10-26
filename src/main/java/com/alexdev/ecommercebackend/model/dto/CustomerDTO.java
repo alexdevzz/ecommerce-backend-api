@@ -1,6 +1,7 @@
 package com.alexdev.ecommercebackend.model.dto;
 
 import com.alexdev.ecommercebackend.constants.RegexExpresions;
+import com.alexdev.ecommercebackend.model.entity.Order;
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,6 +10,7 @@ import jakarta.validation.constraints.*;
 import lombok.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @ToString
@@ -42,5 +44,8 @@ public class CustomerDTO implements Serializable {
     private String country;
 
     private Date creationDate;
+
+
+    private List<Order> orders;
 
 }

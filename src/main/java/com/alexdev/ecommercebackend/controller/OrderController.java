@@ -2,10 +2,14 @@ package com.alexdev.ecommercebackend.controller;
 
 import com.alexdev.ecommercebackend.exceptions.EmptyException;
 import com.alexdev.ecommercebackend.model.dto.OrderDTO;
+import com.alexdev.ecommercebackend.payload.ListMessageResponse;
 import com.alexdev.ecommercebackend.payload.MessageResponse;
 import com.alexdev.ecommercebackend.service.OrderService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -56,15 +60,19 @@ public class OrderController{
     }
 
     @GetMapping("")
-    public ResponseEntity<?> getAllOrders() {
-        List<OrderDTO> listOrderDTO = orderService.getOrders();
+    public ResponseEntity<?> getAllOrders(@PageableDefault(page = 0, size = 10) Pageable pageable) {
+        List<OrderDTO> listOrderDTO = orderService.getOrders(pageable);
         if (listOrderDTO.isEmpty()) {
             throw new EmptyException("No orders found");
         }
-        return new ResponseEntity<>(MessageResponse.builder()
+        return new ResponseEntity<>(ListMessageResponse
+                .builder()
                 .message("orders retrieved successfully")
-                .data(listOrderDTO)
+                .sort(pageable.getSort().toString())
+                .page(pageable.getPageNumber())
+                .total(orderService.count())
                 .count(listOrderDTO.size())
+                .data(listOrderDTO)
                 .build()
                 , HttpStatus.OK);
     }

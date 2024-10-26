@@ -2,10 +2,14 @@ package com.alexdev.ecommercebackend.controller;
 
 import com.alexdev.ecommercebackend.exceptions.EmptyException;
 import com.alexdev.ecommercebackend.model.dto.CategoryDTO;
+import com.alexdev.ecommercebackend.payload.ListMessageResponse;
 import com.alexdev.ecommercebackend.payload.MessageResponse;
 import com.alexdev.ecommercebackend.service.CategoryService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -52,14 +56,17 @@ public class CategoryController {
     }
 
     @GetMapping("")
-    public ResponseEntity<?> getAllCategories() {
-        List<CategoryDTO> listCategoryDTO = categoryService.getCategories();
+    public ResponseEntity<?> getAllCategories(@PageableDefault(page = 0, size = 10, sort = "name", direction = Sort.Direction.ASC) Pageable pageable) {
+        List<CategoryDTO> listCategoryDTO = categoryService.getCategories(pageable);
         if (listCategoryDTO.isEmpty()) {
             throw new EmptyException("No categories found");
         }
-        return new ResponseEntity<>(MessageResponse
+        return new ResponseEntity<>(ListMessageResponse
                 .builder()
                 .message("categories retrieved successfully")
+                .sort(pageable.getSort().toString())
+                .page(pageable.getPageNumber())
+                .total(categoryService.count())
                 .count(listCategoryDTO.size())
                 .data(listCategoryDTO)
                 .build()

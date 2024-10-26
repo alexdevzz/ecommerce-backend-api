@@ -1,12 +1,13 @@
 package com.alexdev.ecommercebackend.service;
 
 import com.alexdev.ecommercebackend.model.dto.OptionDTO;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface OptionService {
 
-    List<OptionDTO> getOptions();
+    List<OptionDTO> getOptions(Pageable pageable);
 
     OptionDTO save(OptionDTO optionDTO);
 
@@ -17,4 +18,6 @@ public interface OptionService {
     OptionDTO delete(int optionDTOId);
 
     boolean existsById(int id);
+
+    int count();
 }
