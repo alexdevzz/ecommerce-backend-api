@@ -18,7 +18,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/categories")
+@RequestMapping("categories")
 public class CategoryController {
 
     @Autowired
