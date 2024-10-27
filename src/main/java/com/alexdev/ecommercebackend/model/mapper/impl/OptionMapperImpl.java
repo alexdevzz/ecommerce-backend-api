@@ -56,7 +56,6 @@ public class OptionMapperImpl implements OptionMapper {
         }
         option.setId(optionDTO.getId());
         option.setName(optionDTO.getName());
-        option.setCreationDate(optionDTO.getCreationDate());
         option.setProducts(optionDTO.getProducts());
     }
 }

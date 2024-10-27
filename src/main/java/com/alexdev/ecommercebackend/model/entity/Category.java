@@ -1,5 +1,6 @@
 package com.alexdev.ecommercebackend.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -32,5 +33,6 @@ public class Category implements Serializable {
 
 
     @ManyToMany(mappedBy = "categories")
+    @JsonIgnore
     private List<Product> products;
 }

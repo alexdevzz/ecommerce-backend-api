@@ -21,19 +21,35 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private CategoryMapper categoryMapper;
 
+
     @Override
-    public List<CategoryDTO> getCategories(Pageable pageable) {
+    public List<CategoryDTO> getCategoriesDTO(Pageable pageable) {
         return categoryMapper.toCategoryDtos(categoryRepository.findAll(pageable).getContent());
     }
 
     @Override
-    public CategoryDTO getCategory(int id) {
+    public List<Category> getCategories(Pageable pageable) {
+        return categoryRepository.findAll(pageable).getContent();
+    }
+
+    @Override
+    public CategoryDTO getCategoryDTO(int id) {
         Category category = categoryRepository.findById(id).get();
         return categoryMapper.toCategoryDto(category);
     }
 
     @Override
-    public CategoryDTO save(CategoryDTO categoryDTO) {
+    public Category getCategory(int id) {
+        return categoryRepository.findById(id).get();
+    }
+
+    @Override
+    public CategoryDTO getCategoryByName(String name) {
+        return categoryMapper.toCategoryDto(categoryRepository.getByNameIgnoreCase(name));
+    }
+
+    @Override
+    public CategoryDTO create(CategoryDTO categoryDTO) {
         categoryDTO.setId(0);
         categoryDTO.setCreationDate(new Date());
         categoryDTO.setProducts(new ArrayList<>());
@@ -63,7 +79,13 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    public boolean existsByNameIgnoreCase(String name) {
+        return categoryRepository.existsByNameIgnoreCase(name.strip());
+    }
+
+    @Override
     public int count() {
         return (int) categoryRepository.count();
     }
+
 }

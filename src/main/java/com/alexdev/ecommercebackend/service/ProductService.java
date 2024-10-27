@@ -1,24 +1,33 @@
 package com.alexdev.ecommercebackend.service;
 
+import com.alexdev.ecommercebackend.model.dto.CategoryDTO;
 import com.alexdev.ecommercebackend.model.dto.ProductDTO;
+import com.alexdev.ecommercebackend.model.entity.Product;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface ProductService {
 
-    List<ProductDTO> getProducts(Pageable pageable);
+    List<ProductDTO> getProductsDTO(Pageable pageable);
 
-    ProductDTO save(ProductDTO productDTO);
+    List<Product> getProducts(Pageable pageable);
+
+    ProductDTO create(ProductDTO productDTO);
 
     ProductDTO update(int productId, ProductDTO productDTO);
 
-    ProductDTO getProduct(int ProductDTOId);
+    ProductDTO getProductDTO(int id);
+
+    Product getProduct(int id);
 
     ProductDTO delete(int ProductDTOId);
 
     boolean existsById(int id);
 
     int count();
+
+
+    ProductDTO addCategory(int id, CategoryDTO categoryDTO);
 
 }

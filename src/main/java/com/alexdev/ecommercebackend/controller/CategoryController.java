@@ -14,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.Serializable;
 import java.util.List;
 
 @RestController
@@ -30,7 +29,7 @@ public class CategoryController {
         return new ResponseEntity<>(MessageResponse
                 .builder()
                 .message("category created successfully")
-                .data(categoryService.save(categoryDTO))
+                .data(categoryService.create(categoryDTO))
                 .build()
                 , HttpStatus.CREATED);
     }
@@ -57,7 +56,7 @@ public class CategoryController {
 
     @GetMapping("")
     public ResponseEntity<?> getAllCategories(@PageableDefault(page = 0, size = 10, sort = "name", direction = Sort.Direction.ASC) Pageable pageable) {
-        List<CategoryDTO> listCategoryDTO = categoryService.getCategories(pageable);
+        List<CategoryDTO> listCategoryDTO = categoryService.getCategoriesDTO(pageable);
         if (listCategoryDTO.isEmpty()) {
             throw new EmptyException("No categories found");
         }
@@ -78,7 +77,7 @@ public class CategoryController {
         return new ResponseEntity<>(MessageResponse
                 .builder()
                 .message("category retrieved successfully")
-                .data(categoryService.getCategory(id))
+                .data(categoryService.getCategoryDTO(id))
                 .build()
                 , HttpStatus.OK);
     }

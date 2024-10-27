@@ -1,5 +1,6 @@
 package com.alexdev.ecommercebackend.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -55,8 +56,10 @@ public class Product implements Serializable {
     @JoinTable(
             name = "product_rel_category",
             joinColumns = @JoinColumn(name = "fk_product"),
-            inverseJoinColumns = @JoinColumn(name = "fk_category")
+            inverseJoinColumns = @JoinColumn(name = "fk_category"),
+            uniqueConstraints = @UniqueConstraint(columnNames = {"fk_product", "fk_category"})
     )
+    @JsonIgnore
     private List<Category> categories;
 
 

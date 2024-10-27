@@ -1,14 +1,14 @@
 package com.alexdev.ecommercebackend.service.impl;
 
+import com.alexdev.ecommercebackend.model.dto.CategoryDTO;
 import com.alexdev.ecommercebackend.model.dto.ProductDTO;
 import com.alexdev.ecommercebackend.model.entity.Product;
+import com.alexdev.ecommercebackend.model.mapper.CategoryMapper;
 import com.alexdev.ecommercebackend.model.mapper.ProductMapper;
 import com.alexdev.ecommercebackend.repository.ProductRepository;
 import com.alexdev.ecommercebackend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,14 +22,22 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
     @Autowired
     private ProductMapper productMapper;
+    @Autowired
+    private CategoryMapper categoryMapper;
+
 
     @Override
-    public List<ProductDTO> getProducts(Pageable pageable) {
+    public List<ProductDTO> getProductsDTO(Pageable pageable) {
         return productMapper.toProductDtos(productRepository.findAll(pageable).getContent());
     }
 
     @Override
-    public ProductDTO save(ProductDTO productDTO) {
+    public List<Product> getProducts(Pageable pageable) {
+        return productRepository.findAll(pageable).getContent();
+    }
+
+    @Override
+    public ProductDTO create(ProductDTO productDTO) {
         productDTO.setId(0);
         productDTO.setCreationDate(new Date());
         productDTO.setOptions(new ArrayList<>());
@@ -48,9 +56,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDTO getProduct(int id) {
+    public ProductDTO getProductDTO(int id) {
         Product product = productRepository.findById(id).get();
         return productMapper.toProductDto(product);
+    }
+
+    @Override
+    public Product getProduct(int id) {
+        return productRepository.findById(id).get();
     }
 
     @Override
@@ -69,5 +82,15 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public int count() {
         return (int) productRepository.count();
+    }
+
+
+    @Override
+    public ProductDTO addCategory(int id, CategoryDTO categoryDTO) {
+
+        Product product = productMapper.toProduct(getProductDTO(id));
+        product.getCategories().add(categoryMapper.toCategory(categoryDTO));
+
+        return productMapper.toProductDto(productRepository.save(product));
     }
 }

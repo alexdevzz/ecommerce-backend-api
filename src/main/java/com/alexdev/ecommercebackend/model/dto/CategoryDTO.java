@@ -26,7 +26,6 @@ public class CategoryDTO implements Serializable {
 
     private Date creationDate;
 
-
     private List<Product> products;
 
 }

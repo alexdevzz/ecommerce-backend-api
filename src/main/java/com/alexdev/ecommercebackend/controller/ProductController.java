@@ -1,15 +1,15 @@
 package com.alexdev.ecommercebackend.controller;
 
 import com.alexdev.ecommercebackend.exceptions.EmptyException;
+import com.alexdev.ecommercebackend.model.dto.CategoryDTO;
 import com.alexdev.ecommercebackend.model.dto.ProductDTO;
-import com.alexdev.ecommercebackend.model.entity.Product;
 import com.alexdev.ecommercebackend.payload.ListMessageResponse;
 import com.alexdev.ecommercebackend.payload.MessageResponse;
+import com.alexdev.ecommercebackend.service.CategoryService;
 import com.alexdev.ecommercebackend.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -24,12 +24,15 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
+    @Autowired
+    private CategoryService categoryService;
+
 
     @PostMapping("")
     public ResponseEntity<?> create(@Valid @RequestBody ProductDTO productDTO) {
         return new ResponseEntity<>(MessageResponse.builder()
                 .message("product created successfully")
-                .data(productService.save(productDTO))
+                .data(productService.create(productDTO))
                 .build()
                 , HttpStatus.CREATED);
     }
@@ -59,14 +62,14 @@ public class ProductController {
         return new ResponseEntity<>(MessageResponse
                 .builder()
                 .message("product retrieved successfully")
-                .data(productService.getProduct(id))
+                .data(productService.getProductDTO(id))
                 .build()
                 , HttpStatus.OK);
     }
 
     @GetMapping("")
     public ResponseEntity<?> getAllProducts(@PageableDefault(page = 0, size = 10, sort = "creationDate", direction = Direction.DESC) Pageable pageable) {
-        List<ProductDTO> listProductDTO = productService.getProducts(pageable);
+        List<ProductDTO> listProductDTO = productService.getProductsDTO(pageable);
         if (listProductDTO.isEmpty()) {
             throw new EmptyException("No products found");
         }
@@ -82,10 +85,26 @@ public class ProductController {
                 , HttpStatus.OK);
     }
 
+    @PostMapping("{id}/categories")
+    public ResponseEntity<?> addCategory(@PathVariable int id, @Valid @RequestBody CategoryDTO categoryDTO) {
 
+        if (! categoryService.existsByNameIgnoreCase(categoryDTO.getName().strip()))
+        {
+            categoryDTO.setName(categoryDTO.getName().strip());
+            categoryDTO = categoryService.create(categoryDTO);
+        }
+        else
+        {
+            categoryDTO = categoryService.getCategoryByName(categoryDTO.getName().strip());
+        }
 
-
-
+        return new ResponseEntity<>(MessageResponse
+                .builder()
+                .message("category added to product successfully")
+                .data(productService.addCategory(id, categoryDTO))
+                .build()
+                , HttpStatus.OK);
+    }
 
 
 }

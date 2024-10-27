@@ -64,7 +64,6 @@ public class CategoryMapperImpl implements CategoryMapper {
         category.setId(categoryDTO.getId());
         category.setName(categoryDTO.getName());
         category.setDescription(categoryDTO.getDescription());
-        category.setCreationDate(categoryDTO.getCreationDate());
         category.setProducts(categoryDTO.getProducts());
     }
 }
