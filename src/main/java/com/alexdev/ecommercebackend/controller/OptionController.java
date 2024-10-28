@@ -27,7 +27,7 @@ public class OptionController {
     public ResponseEntity<?> create(@Valid @RequestBody OptionDTO optionDTO) {
         return new ResponseEntity<>(MessageResponse.builder()
                 .message("option created successfully")
-                .data(optionService.save(optionDTO))
+                .data(optionService.create(optionDTO))
                 .build()
                 , HttpStatus.CREATED);
     }
@@ -54,14 +54,14 @@ public class OptionController {
     public ResponseEntity<?> getOption(@PathVariable int id) {
         return new ResponseEntity<>(MessageResponse.builder()
                 .message("option retrived successfully")
-                .data(optionService.getOption(id))
+                .data(optionService.getOptionDTO(id))
                 .build()
                 , HttpStatus.OK);
     }
 
     @GetMapping("")
     public ResponseEntity<?> getAllOptions(@PageableDefault(page = 0, size = 10, sort = "creationDate", direction = Sort.Direction.DESC) Pageable pageable) {
-        List<OptionDTO> listOptionDTO = optionService.getOptions(pageable);
+        List<OptionDTO> listOptionDTO = optionService.getOptionsDTO(pageable);
         if (listOptionDTO.isEmpty()) {
             throw new EmptyException("No options found");
         }

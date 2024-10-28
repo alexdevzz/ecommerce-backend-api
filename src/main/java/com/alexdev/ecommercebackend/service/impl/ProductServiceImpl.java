@@ -1,9 +1,12 @@
 package com.alexdev.ecommercebackend.service.impl;
 
 import com.alexdev.ecommercebackend.model.dto.CategoryDTO;
+import com.alexdev.ecommercebackend.model.dto.OptionDTO;
 import com.alexdev.ecommercebackend.model.dto.ProductDTO;
+import com.alexdev.ecommercebackend.model.entity.Option;
 import com.alexdev.ecommercebackend.model.entity.Product;
 import com.alexdev.ecommercebackend.model.mapper.CategoryMapper;
+import com.alexdev.ecommercebackend.model.mapper.OptionMapper;
 import com.alexdev.ecommercebackend.model.mapper.ProductMapper;
 import com.alexdev.ecommercebackend.repository.ProductRepository;
 import com.alexdev.ecommercebackend.service.ProductService;
@@ -24,6 +27,8 @@ public class ProductServiceImpl implements ProductService {
     private ProductMapper productMapper;
     @Autowired
     private CategoryMapper categoryMapper;
+    @Autowired
+    private OptionMapper optionMapper;
 
 
     @Override
@@ -87,9 +92,16 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDTO addCategory(int id, CategoryDTO categoryDTO) {
-
         Product product = productMapper.toProduct(getProductDTO(id));
         product.getCategories().add(categoryMapper.toCategory(categoryDTO));
+
+        return productMapper.toProductDto(productRepository.save(product));
+    }
+
+    @Override
+    public ProductDTO addOption(int id, OptionDTO optionDTO) {
+        Product product = productMapper.toProduct(getProductDTO(id));
+        product.getOptions().add(optionMapper.toOption(optionDTO));
 
         return productMapper.toProductDto(productRepository.save(product));
     }

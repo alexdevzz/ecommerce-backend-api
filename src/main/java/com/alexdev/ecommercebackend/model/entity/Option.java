@@ -1,5 +1,6 @@
 package com.alexdev.ecommercebackend.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,6 +30,7 @@ public class Option implements Serializable {
 
 
     @ManyToMany(mappedBy = "options")
+    @JsonIgnore
     private List<Product> products;
 
 

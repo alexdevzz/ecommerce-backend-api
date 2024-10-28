@@ -44,7 +44,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryDTO getCategoryByName(String name) {
+    public CategoryDTO getCategoryDTOByName(String name) {
         return categoryMapper.toCategoryDto(categoryRepository.getByNameIgnoreCase(name));
     }
 

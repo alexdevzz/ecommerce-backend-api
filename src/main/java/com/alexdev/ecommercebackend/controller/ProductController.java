@@ -2,10 +2,12 @@ package com.alexdev.ecommercebackend.controller;
 
 import com.alexdev.ecommercebackend.exceptions.EmptyException;
 import com.alexdev.ecommercebackend.model.dto.CategoryDTO;
+import com.alexdev.ecommercebackend.model.dto.OptionDTO;
 import com.alexdev.ecommercebackend.model.dto.ProductDTO;
 import com.alexdev.ecommercebackend.payload.ListMessageResponse;
 import com.alexdev.ecommercebackend.payload.MessageResponse;
 import com.alexdev.ecommercebackend.service.CategoryService;
+import com.alexdev.ecommercebackend.service.OptionService;
 import com.alexdev.ecommercebackend.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,8 @@ public class ProductController {
     private ProductService productService;
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private OptionService optionService;
 
 
     @PostMapping("")
@@ -85,6 +89,7 @@ public class ProductController {
                 , HttpStatus.OK);
     }
 
+
     @PostMapping("{id}/categories")
     public ResponseEntity<?> addCategory(@PathVariable int id, @Valid @RequestBody CategoryDTO categoryDTO) {
 
@@ -95,7 +100,7 @@ public class ProductController {
         }
         else
         {
-            categoryDTO = categoryService.getCategoryByName(categoryDTO.getName().strip());
+            categoryDTO = categoryService.getCategoryDTOByName(categoryDTO.getName().strip());
         }
 
         return new ResponseEntity<>(MessageResponse
@@ -103,8 +108,28 @@ public class ProductController {
                 .message("category added to product successfully")
                 .data(productService.addCategory(id, categoryDTO))
                 .build()
-                , HttpStatus.OK);
+                , HttpStatus.CREATED);
     }
 
+    @PostMapping("{id}/options")
+    public ResponseEntity<?> addOption(@PathVariable int id, @Valid @RequestBody OptionDTO optionDTO) {
+
+        if (! optionService.existsByNameIgnoreCase(optionDTO.getName().strip()))
+        {
+            optionDTO.setName(optionDTO.getName().strip());
+            optionDTO = optionService.create(optionDTO);
+        }
+        else
+        {
+            optionDTO = optionService.getOptionDTOByName(optionDTO.getName().strip());
+        }
+
+        return new ResponseEntity<>(MessageResponse
+                .builder()
+                .message("option added to product successfully")
+                .data(productService.addOption(id, optionDTO))
+                .build()
+                , HttpStatus.CREATED);
+    }
 
 }

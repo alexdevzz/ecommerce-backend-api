@@ -16,7 +16,7 @@ public interface CategoryService {
 
     Category getCategory(int id);
 
-    CategoryDTO getCategoryByName(String name);
+    CategoryDTO getCategoryDTOByName(String name);
 
     CategoryDTO create(CategoryDTO categoryDTO);
 

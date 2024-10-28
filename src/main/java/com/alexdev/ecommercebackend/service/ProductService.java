@@ -1,6 +1,7 @@
 package com.alexdev.ecommercebackend.service;
 
 import com.alexdev.ecommercebackend.model.dto.CategoryDTO;
+import com.alexdev.ecommercebackend.model.dto.OptionDTO;
 import com.alexdev.ecommercebackend.model.dto.ProductDTO;
 import com.alexdev.ecommercebackend.model.entity.Product;
 import org.springframework.data.domain.Pageable;
@@ -29,5 +30,7 @@ public interface ProductService {
 
 
     ProductDTO addCategory(int id, CategoryDTO categoryDTO);
+
+    ProductDTO addOption(int id, OptionDTO optionDTO);
 
 }

@@ -7,17 +7,21 @@ import java.util.List;
 
 public interface OptionService {
 
-    List<OptionDTO> getOptions(Pageable pageable);
+    List<OptionDTO> getOptionsDTO(Pageable pageable);
 
-    OptionDTO save(OptionDTO optionDTO);
+    OptionDTO create(OptionDTO optionDTO);
 
     OptionDTO update(int optionId, OptionDTO optionDTO);
 
-    OptionDTO getOption(int optionDTOId);
+    OptionDTO getOptionDTO(int optionDTOId);
+
+    OptionDTO getOptionDTOByName(String name);
 
     OptionDTO delete(int optionDTOId);
 
     boolean existsById(int id);
+
+    boolean existsByNameIgnoreCase(String name);
 
     int count();
 }

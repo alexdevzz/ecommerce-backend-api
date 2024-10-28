@@ -48,8 +48,10 @@ public class Product implements Serializable {
     @JoinTable(
             name = "product_rel_option",
             joinColumns = @JoinColumn(name = "fk_product"),
-            inverseJoinColumns = @JoinColumn(name = "fk_option")
+            inverseJoinColumns = @JoinColumn(name = "fk_option"),
+            uniqueConstraints = @UniqueConstraint(columnNames = {"fk_product", "fk_option"})
     )
+    @JsonIgnore
     private List<Option> options;
 
     @ManyToMany

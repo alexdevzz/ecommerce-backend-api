@@ -23,12 +23,12 @@ public class OptionServiceImpl implements OptionService {
 
 
     @Override
-    public List<OptionDTO> getOptions(Pageable pageable) {
+    public List<OptionDTO> getOptionsDTO(Pageable pageable) {
         return optionMapper.toOptionDtos(optionRepository.findAll(pageable).getContent());
     }
 
     @Override
-    public OptionDTO save(OptionDTO optionDTO) {
+    public OptionDTO create(OptionDTO optionDTO) {
         optionDTO.setId(0);
         optionDTO.setCreationDate(new Date());
         optionDTO.setProducts(new ArrayList<>());
@@ -45,9 +45,14 @@ public class OptionServiceImpl implements OptionService {
     }
 
     @Override
-    public OptionDTO getOption(int optionDTOId) {
+    public OptionDTO getOptionDTO(int optionDTOId) {
         Option option = optionRepository.findById(optionDTOId).get();
         return optionMapper.toOptionDto(option);
+    }
+
+    @Override
+    public OptionDTO getOptionDTOByName(String name) {
+        return optionMapper.toOptionDto(optionRepository.getByNameIgnoreCase(name));
     }
 
     @Override
@@ -61,6 +66,11 @@ public class OptionServiceImpl implements OptionService {
     @Override
     public boolean existsById(int id) {
         return optionRepository.existsById(id);
+    }
+
+    @Override
+    public boolean existsByNameIgnoreCase(String name) {
+        return optionRepository.existsByNameIgnoreCase(name.strip());
     }
 
     @Override
