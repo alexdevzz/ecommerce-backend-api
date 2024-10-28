@@ -4,10 +4,6 @@ import com.alexdev.ecommercebackend.constants.RegexExpresions;
 import com.alexdev.ecommercebackend.model.entity.Customer;
 import com.alexdev.ecommercebackend.model.entity.OrderDates;
 import com.alexdev.ecommercebackend.model.entity.OrderDetails;
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.validation.constraints.*;
 import lombok.Builder;
 import lombok.Data;
@@ -23,12 +19,9 @@ public class OrderDTO implements Serializable {
 
     private int id;
 
-    @NotNull(message = "cannot be null")
-    @Positive(message = "cannot be 0 or under")
+    @PositiveOrZero(message = "cannot be under 0")
     private int ammount;
 
-    @NotBlank(message = "cannot be blank")
-    @NotNull(message = "cannot be null")
     private String shippingAddress;
 
     @NotBlank(message = "cannot be blank")
@@ -39,6 +32,12 @@ public class OrderDTO implements Serializable {
     @NotNull(message = "cannot be null")
     @Pattern(regexp = RegexExpresions.rgxEmail, message = "incorrect format")
     private String orderEmail;
+
+    private String orderStatus;
+
+    @NotBlank(message = "cannot be blank")
+    @NotNull(message = "cannot be null")
+    private String sku;
 
 
     private Customer customer;

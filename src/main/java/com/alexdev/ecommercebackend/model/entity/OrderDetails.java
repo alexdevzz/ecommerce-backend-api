@@ -19,8 +19,7 @@ public class OrderDetails implements Serializable {
     @Column(name = "id_order_details")
     private int id;
 
-    @Column(name = "sku", unique = true)
-    private String sku;
+
 
     @Column(name = "price")
     private double price;

@@ -32,7 +32,6 @@ public class OrderDatesServiceImpl implements OrderDatesService {
     public OrderDatesDTO create(OrderDatesDTO orderDatesDTO) {
         orderDatesDTO.setId(0);
         orderDatesDTO.setCreationDate(new Date());
-        orderDatesDTO.setOrder(null);
         OrderDates orderDates = orderDatesMapper.toOrderDates(orderDatesDTO);
         return orderDatesMapper.toOrderDatesDTO(orderDatesRepository.save(orderDates));
     }

@@ -23,14 +23,14 @@ public class OrderController{
     @Autowired
     private OrderService orderService;
 
-    @PostMapping("")
-    public ResponseEntity<?> create(@Valid @RequestBody OrderDTO orderDTO) {
-        return new ResponseEntity<>(MessageResponse.builder()
-                .message("order created successfully")
-                .data(orderService.save(orderDTO))
-                .build()
-                , HttpStatus.CREATED);
-    }
+//    @PostMapping("")
+//    public ResponseEntity<?> create(@Valid @RequestBody OrderDTO orderDTO) {
+//        return new ResponseEntity<>(MessageResponse.builder()
+//                .message("order created successfully")
+//                .data(orderService.create(orderDTO))
+//                .build()
+//                , HttpStatus.CREATED);
+//    }
 
     @PutMapping("{id}")
     public ResponseEntity<?> update(@PathVariable int id, @Valid @RequestBody OrderDTO orderDTO) {

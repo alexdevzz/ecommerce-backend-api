@@ -26,6 +26,8 @@ public class OrderMapperImpl implements OrderMapper {
                 .ordersDetails(orderDTO.getOrdersDetails())
                 .customer(orderDTO.getCustomer())
                 .orderDates(orderDTO.getOrderDates())
+                .orderStatus(orderDTO.getOrderStatus())
+                .sku(orderDTO.getSku())
                 .build();
     }
 
@@ -44,6 +46,8 @@ public class OrderMapperImpl implements OrderMapper {
                 .ordersDetails(order.getOrdersDetails())
                 .customer(order.getCustomer())
                 .orderDates(order.getOrderDates())
+                .orderStatus(order.getOrderStatus())
+                .sku(order.getSku())
                 .build();
     }
 
@@ -73,5 +77,7 @@ public class OrderMapperImpl implements OrderMapper {
         order.setOrdersDetails(orderDTO.getOrdersDetails());
         order.setCustomer(orderDTO.getCustomer());
         order.setOrderDates(orderDTO.getOrderDates());
+        order.setOrderStatus(orderDTO.getOrderStatus());
+        order.setSku(orderDTO.getSku());
     }
 }

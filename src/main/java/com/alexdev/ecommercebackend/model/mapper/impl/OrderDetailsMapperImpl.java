@@ -19,7 +19,6 @@ public class OrderDetailsMapperImpl implements OrderDetailsMapper {
 
         return OrderDetails.builder()
                 .id(orderDetailsDTO.getId())
-                .sku(orderDetailsDTO.getSku())
                 .price(orderDetailsDTO.getPrice())
                 .quantity(orderDetailsDTO.getQuantity())
                 .product(orderDetailsDTO.getProduct())
@@ -35,7 +34,6 @@ public class OrderDetailsMapperImpl implements OrderDetailsMapper {
 
         return OrderDetailsDTO.builder()
                 .id(orderDetails.getId())
-                .sku(orderDetails.getSku())
                 .price(orderDetails.getPrice())
                 .quantity(orderDetails.getQuantity())
                 .product(orderDetails.getProduct())
@@ -61,7 +59,6 @@ public class OrderDetailsMapperImpl implements OrderDetailsMapper {
             return;
         }
         orderDetailsDTO.setId(orderDetails.getId());
-        orderDetailsDTO.setSku(orderDetails.getSku());
         orderDetailsDTO.setPrice(orderDetails.getPrice());
         orderDetailsDTO.setQuantity(orderDetails.getQuantity());
         orderDetailsDTO.setProduct(orderDetails.getProduct());

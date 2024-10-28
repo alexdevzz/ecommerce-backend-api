@@ -20,10 +20,6 @@ public class OrderDetailsDTO implements Serializable {
 
     private int id;
 
-    @NotBlank(message = "cannot be blank")
-    @NotNull(message = "cannot be null")
-    private String sku;
-
     @NotNull(message = "cannot be null")
     @Positive
     private double price;

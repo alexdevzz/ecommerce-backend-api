@@ -1,5 +1,6 @@
 package com.alexdev.ecommercebackend.service;
 
+import com.alexdev.ecommercebackend.model.dto.CustomerDTO;
 import com.alexdev.ecommercebackend.model.dto.OrderDTO;
 import org.springframework.data.domain.Pageable;
 
@@ -9,7 +10,9 @@ public interface OrderService {
 
     List<OrderDTO> getOrders(Pageable pageable);
 
-    OrderDTO save(OrderDTO orderDTO);
+    OrderDTO create(OrderDTO orderDTO);
+
+    OrderDTO create(OrderDTO orderDTO, CustomerDTO customerDTO);
 
     OrderDTO update(int orderId, OrderDTO orderDTO);
 

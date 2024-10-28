@@ -1,5 +1,6 @@
 package com.alexdev.ecommercebackend.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -55,5 +56,6 @@ public class OrderDates implements Serializable {
 
 
     @OneToOne(mappedBy = "orderDates")
+    @JsonIgnore
     private Order order;
 }

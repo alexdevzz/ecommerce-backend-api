@@ -1,5 +1,6 @@
 package com.alexdev.ecommercebackend.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -35,9 +36,13 @@ public class Order implements Serializable {
     @Column(name = "order_status")
     private String orderStatus;
 
+    @Column(name = "sku", unique = true)
+    private String sku;
+
 
     @ManyToOne
     @JoinColumn(name = "fk_customer")
+    @JsonIgnore
     private Customer customer;
 
     @OneToMany(mappedBy = "order")

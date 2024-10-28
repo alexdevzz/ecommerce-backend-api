@@ -1,10 +1,16 @@
 package com.alexdev.ecommercebackend.controller;
 
+import com.alexdev.ecommercebackend.constants.OrderStatusEnum;
 import com.alexdev.ecommercebackend.exceptions.EmptyException;
 import com.alexdev.ecommercebackend.model.dto.CustomerDTO;
+import com.alexdev.ecommercebackend.model.dto.OrderDTO;
+import com.alexdev.ecommercebackend.model.entity.OrderDates;
+import com.alexdev.ecommercebackend.model.mapper.CustomerMapper;
 import com.alexdev.ecommercebackend.payload.ListMessageResponse;
 import com.alexdev.ecommercebackend.payload.MessageResponse;
 import com.alexdev.ecommercebackend.service.CustomerService;
+import com.alexdev.ecommercebackend.service.OrderDatesService;
+import com.alexdev.ecommercebackend.service.OrderService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -14,6 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -22,6 +29,12 @@ public class CustomerController {
 
     @Autowired
     private CustomerService customerService;
+    @Autowired
+    private OrderService orderService;
+    @Autowired
+    private CustomerMapper customerMapper;
+    @Autowired
+    private OrderDatesService orderDatesService;
 
 
     @PostMapping("")
@@ -56,19 +69,20 @@ public class CustomerController {
     public ResponseEntity<?> getCustomer(@PathVariable int id) {
         return new ResponseEntity<>(MessageResponse.builder()
                 .message("client retrieved successfully")
-                .data(customerService.GetCustomer(id))
+                .data(customerService.GetCustomerDTO(id))
                 .build()
                 , HttpStatus.OK);
     }
 
     @GetMapping("")
     public ResponseEntity<?> getAllCustomers(@PageableDefault(page = 0, size = 10, sort = "creationDate", direction = Sort.Direction.DESC) Pageable pageable) {
-        List<CustomerDTO> listCustomerDTO = customerService.getCustomers(pageable);
+        List<CustomerDTO> listCustomerDTO = customerService.getCustomersDTO(pageable);
         if (listCustomerDTO.isEmpty()) {
-            throw new EmptyException("No clients found");
+            throw new EmptyException("No customers found");
         }
         return new ResponseEntity<>(ListMessageResponse
                 .builder()
+                .message("customers retrieved successfully")
                 .sort(pageable.getSort().toString())
                 .page(pageable.getPageNumber())
                 .total(customerService.count())
@@ -77,4 +91,17 @@ public class CustomerController {
                 .build()
                 , HttpStatus.OK);
     }
+
+
+    @PostMapping("{id}/orders")
+    public ResponseEntity<?> addOrder(@PathVariable int id, @Valid @RequestBody OrderDTO orderDTO) {
+        return new ResponseEntity<>(MessageResponse
+                .builder()
+                .message("order created successfully")
+                .data(orderService.create(orderDTO, customerService.GetCustomerDTO(id)))
+                .build()
+                , HttpStatus.CREATED);
+    }
+
+
 }
