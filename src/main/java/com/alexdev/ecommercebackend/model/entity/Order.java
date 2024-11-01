@@ -22,7 +22,7 @@ public class Order implements Serializable {
     private int id;
 
     @Column(name = "ammount")
-    private int ammount;
+    private double ammount;
 
     @Column(name = "shipping_address")
     private String shippingAddress;
@@ -46,9 +46,11 @@ public class Order implements Serializable {
     private Customer customer;
 
     @OneToMany(mappedBy = "order")
+    @JsonIgnore
     private List<OrderDetails> ordersDetails;
 
     @OneToOne
     @JoinColumn(name = "fk_order_dates")
+    @JsonIgnore
     private OrderDates orderDates;
 }

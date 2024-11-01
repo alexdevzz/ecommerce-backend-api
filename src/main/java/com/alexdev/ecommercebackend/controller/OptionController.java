@@ -2,8 +2,8 @@ package com.alexdev.ecommercebackend.controller;
 
 import com.alexdev.ecommercebackend.exceptions.EmptyException;
 import com.alexdev.ecommercebackend.model.dto.OptionDTO;
-import com.alexdev.ecommercebackend.payload.ListMessageResponse;
-import com.alexdev.ecommercebackend.payload.MessageResponse;
+import com.alexdev.ecommercebackend.payload.ListEntityResponse;
+import com.alexdev.ecommercebackend.payload.EntityResponse;
 import com.alexdev.ecommercebackend.service.OptionService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class OptionController {
 
     @PostMapping("")
     public ResponseEntity<?> create(@Valid @RequestBody OptionDTO optionDTO) {
-        return new ResponseEntity<>(MessageResponse.builder()
+        return new ResponseEntity<>(EntityResponse.builder()
                 .message("option created successfully")
                 .data(optionService.create(optionDTO))
                 .build()
@@ -34,7 +34,7 @@ public class OptionController {
 
     @PutMapping("{id}")
     public ResponseEntity<?> update(@PathVariable int id, @Valid @RequestBody OptionDTO optionDTO) {
-        return new ResponseEntity<>(MessageResponse.builder()
+        return new ResponseEntity<>(EntityResponse.builder()
                 .message("option updated successfully")
                 .data(optionService.update(id,optionDTO))
                 .build()
@@ -43,7 +43,7 @@ public class OptionController {
 
     @DeleteMapping("{id}")
     public ResponseEntity<?> delete(@PathVariable int id) {
-        return new ResponseEntity<>(MessageResponse.builder()
+        return new ResponseEntity<>(EntityResponse.builder()
                 .message("option deleted successfully")
                 .data(optionService.delete(id))
                 .build()
@@ -52,7 +52,7 @@ public class OptionController {
 
     @GetMapping("{id}")
     public ResponseEntity<?> getOption(@PathVariable int id) {
-        return new ResponseEntity<>(MessageResponse.builder()
+        return new ResponseEntity<>(EntityResponse.builder()
                 .message("option retrived successfully")
                 .data(optionService.getOptionDTO(id))
                 .build()
@@ -65,7 +65,7 @@ public class OptionController {
         if (listOptionDTO.isEmpty()) {
             throw new EmptyException("No options found");
         }
-        return new ResponseEntity<>(ListMessageResponse.builder()
+        return new ResponseEntity<>(ListEntityResponse.builder()
                 .message("options retrieved successfully")
                 .sort(pageable.getSort().toString())
                 .page(pageable.getPageNumber())

@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface OrderService {
 
-    List<OrderDTO> getOrders(Pageable pageable);
+    List<OrderDTO> getOrdersDTO(Pageable pageable);
 
     OrderDTO create(OrderDTO orderDTO);
 
@@ -16,11 +16,13 @@ public interface OrderService {
 
     OrderDTO update(int orderId, OrderDTO orderDTO);
 
-    OrderDTO getOrder(int OrderDTOId);
+    OrderDTO getOrderDTO(int OrderDTOId);
 
     OrderDTO delete(int OrderDTOId);
 
     boolean existsByid(int id);
 
     int count();
+
+    void updateAmmount(int idOrder, double ammount);
 }

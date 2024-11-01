@@ -21,4 +21,6 @@ public interface OrderDatesService {
     boolean existsByid(int id);
 
     int count();
+
+    OrderDatesDTO setNextDate(OrderDatesDTO orderDatesDTO);
 }

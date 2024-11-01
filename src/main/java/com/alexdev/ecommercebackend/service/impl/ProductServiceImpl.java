@@ -3,7 +3,6 @@ package com.alexdev.ecommercebackend.service.impl;
 import com.alexdev.ecommercebackend.model.dto.CategoryDTO;
 import com.alexdev.ecommercebackend.model.dto.OptionDTO;
 import com.alexdev.ecommercebackend.model.dto.ProductDTO;
-import com.alexdev.ecommercebackend.model.entity.Option;
 import com.alexdev.ecommercebackend.model.entity.Product;
 import com.alexdev.ecommercebackend.model.mapper.CategoryMapper;
 import com.alexdev.ecommercebackend.model.mapper.OptionMapper;
@@ -64,6 +63,11 @@ public class ProductServiceImpl implements ProductService {
     public ProductDTO getProductDTO(int id) {
         Product product = productRepository.findById(id).get();
         return productMapper.toProductDto(product);
+    }
+
+    @Override
+    public ProductDTO getProductDTOBySku(String sku) {
+        return productMapper.toProductDto(productRepository.getBySkuIgnoreCase(sku));
     }
 
     @Override

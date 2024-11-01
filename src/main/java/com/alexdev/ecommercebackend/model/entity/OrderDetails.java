@@ -1,7 +1,9 @@
 package com.alexdev.ecommercebackend.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedBy;
 
 import java.io.Serializable;
 
@@ -29,10 +31,12 @@ public class OrderDetails implements Serializable {
 
 
     @ManyToOne
-    @JoinColumn(name = "fk_product")
+    @JoinColumn(name = "fk_product", nullable = false)
     private Product product;
 
     @ManyToOne
-    @JoinColumn(name = "fk_order")
+    @JoinColumn(name = "fk_order", nullable = false)
+    @JsonIgnore
     private Order order;
+
 }

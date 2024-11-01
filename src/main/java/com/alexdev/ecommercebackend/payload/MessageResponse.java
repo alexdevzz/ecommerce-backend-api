@@ -13,12 +13,7 @@ import java.util.Date;
 public class MessageResponse implements Serializable {
 
     @Builder.Default
-    private String message = "";
+    private Object message = "";
     @Builder.Default
     private Date timestamp = new Date();
-    @Builder.Default
-    private int count = 1;
-    @Builder.Default
-    private Object data = null;
-
 }

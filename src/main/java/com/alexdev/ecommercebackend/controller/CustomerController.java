@@ -1,15 +1,11 @@
 package com.alexdev.ecommercebackend.controller;
 
-import com.alexdev.ecommercebackend.constants.OrderStatusEnum;
 import com.alexdev.ecommercebackend.exceptions.EmptyException;
-import com.alexdev.ecommercebackend.model.dto.CustomerDTO;
-import com.alexdev.ecommercebackend.model.dto.OrderDTO;
-import com.alexdev.ecommercebackend.model.entity.OrderDates;
-import com.alexdev.ecommercebackend.model.mapper.CustomerMapper;
-import com.alexdev.ecommercebackend.payload.ListMessageResponse;
-import com.alexdev.ecommercebackend.payload.MessageResponse;
+import com.alexdev.ecommercebackend.model.dto.*;
+import com.alexdev.ecommercebackend.payload.ListEntityResponse;
+import com.alexdev.ecommercebackend.payload.EntityResponse;
 import com.alexdev.ecommercebackend.service.CustomerService;
-import com.alexdev.ecommercebackend.service.OrderDatesService;
+import com.alexdev.ecommercebackend.service.OrderDetailsService;
 import com.alexdev.ecommercebackend.service.OrderService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -32,14 +27,12 @@ public class CustomerController {
     @Autowired
     private OrderService orderService;
     @Autowired
-    private CustomerMapper customerMapper;
-    @Autowired
-    private OrderDatesService orderDatesService;
+    private OrderDetailsService orderDetailsService;
 
 
     @PostMapping("")
     public ResponseEntity<?> create(@Valid @RequestBody CustomerDTO customerDTO) {
-        return new ResponseEntity<>(MessageResponse.builder()
+        return new ResponseEntity<>(EntityResponse.builder()
                 .message("client created successfully")
                 .data(customerService.save(customerDTO))
                 .build()
@@ -48,7 +41,7 @@ public class CustomerController {
 
     @PutMapping("{id}")
     public ResponseEntity<?> update(@Valid @RequestBody CustomerDTO customerDTO, @PathVariable int id) {
-        return new ResponseEntity<>(MessageResponse.builder()
+        return new ResponseEntity<>(EntityResponse.builder()
                 .message("client updated successfully")
                 .data(customerService.update(id, customerDTO))
                 .build()
@@ -58,7 +51,7 @@ public class CustomerController {
 
     @DeleteMapping("{id}")
     public ResponseEntity<?> delete(@PathVariable int id) {
-        return new ResponseEntity<>(MessageResponse.builder()
+        return new ResponseEntity<>(EntityResponse.builder()
                 .message("client deleted successfully")
                 .data(customerService.delete(id))
                 .build()
@@ -67,7 +60,7 @@ public class CustomerController {
 
     @GetMapping("{id}")
     public ResponseEntity<?> getCustomer(@PathVariable int id) {
-        return new ResponseEntity<>(MessageResponse.builder()
+        return new ResponseEntity<>(EntityResponse.builder()
                 .message("client retrieved successfully")
                 .data(customerService.GetCustomerDTO(id))
                 .build()
@@ -80,7 +73,7 @@ public class CustomerController {
         if (listCustomerDTO.isEmpty()) {
             throw new EmptyException("No customers found");
         }
-        return new ResponseEntity<>(ListMessageResponse
+        return new ResponseEntity<>(ListEntityResponse
                 .builder()
                 .message("customers retrieved successfully")
                 .sort(pageable.getSort().toString())
@@ -95,13 +88,14 @@ public class CustomerController {
 
     @PostMapping("{id}/orders")
     public ResponseEntity<?> addOrder(@PathVariable int id, @Valid @RequestBody OrderDTO orderDTO) {
-        return new ResponseEntity<>(MessageResponse
+        return new ResponseEntity<>(EntityResponse
                 .builder()
                 .message("order created successfully")
                 .data(orderService.create(orderDTO, customerService.GetCustomerDTO(id)))
                 .build()
                 , HttpStatus.CREATED);
     }
+
 
 
 }

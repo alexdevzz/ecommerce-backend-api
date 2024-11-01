@@ -4,8 +4,8 @@ import com.alexdev.ecommercebackend.exceptions.EmptyException;
 import com.alexdev.ecommercebackend.model.dto.CategoryDTO;
 import com.alexdev.ecommercebackend.model.dto.OptionDTO;
 import com.alexdev.ecommercebackend.model.dto.ProductDTO;
-import com.alexdev.ecommercebackend.payload.ListMessageResponse;
-import com.alexdev.ecommercebackend.payload.MessageResponse;
+import com.alexdev.ecommercebackend.payload.ListEntityResponse;
+import com.alexdev.ecommercebackend.payload.EntityResponse;
 import com.alexdev.ecommercebackend.service.CategoryService;
 import com.alexdev.ecommercebackend.service.OptionService;
 import com.alexdev.ecommercebackend.service.ProductService;
@@ -34,7 +34,7 @@ public class ProductController {
 
     @PostMapping("")
     public ResponseEntity<?> create(@Valid @RequestBody ProductDTO productDTO) {
-        return new ResponseEntity<>(MessageResponse.builder()
+        return new ResponseEntity<>(EntityResponse.builder()
                 .message("product created successfully")
                 .data(productService.create(productDTO))
                 .build()
@@ -43,7 +43,7 @@ public class ProductController {
 
     @PutMapping("{id}")
     public ResponseEntity<?> update(@PathVariable int id, @Valid @RequestBody ProductDTO productDTO) {
-        return new ResponseEntity<>(MessageResponse
+        return new ResponseEntity<>(EntityResponse
                 .builder()
                 .message("product updated successfully")
                 .data(productService.update(id, productDTO))
@@ -53,7 +53,7 @@ public class ProductController {
 
     @DeleteMapping("{id}")
     public ResponseEntity<?> delete(@PathVariable int id) {
-        return new ResponseEntity<>(MessageResponse
+        return new ResponseEntity<>(EntityResponse
                 .builder()
                 .message("product deleted successfully")
                 .data(productService.delete(id))
@@ -63,7 +63,7 @@ public class ProductController {
 
     @GetMapping("{id}")
     public ResponseEntity<?> getProduct(@PathVariable int id) {
-        return new ResponseEntity<>(MessageResponse
+        return new ResponseEntity<>(EntityResponse
                 .builder()
                 .message("product retrieved successfully")
                 .data(productService.getProductDTO(id))
@@ -77,7 +77,7 @@ public class ProductController {
         if (listProductDTO.isEmpty()) {
             throw new EmptyException("No products found");
         }
-        return new ResponseEntity<>(ListMessageResponse
+        return new ResponseEntity<>(ListEntityResponse
                 .builder()
                 .message("products retrieved successfully")
                 .sort(pageable.getSort().toString())
@@ -103,7 +103,7 @@ public class ProductController {
             categoryDTO = categoryService.getCategoryDTOByName(categoryDTO.getName().strip());
         }
 
-        return new ResponseEntity<>(MessageResponse
+        return new ResponseEntity<>(EntityResponse
                 .builder()
                 .message("category added to product successfully")
                 .data(productService.addCategory(id, categoryDTO))
@@ -124,7 +124,7 @@ public class ProductController {
             optionDTO = optionService.getOptionDTOByName(optionDTO.getName().strip());
         }
 
-        return new ResponseEntity<>(MessageResponse
+        return new ResponseEntity<>(EntityResponse
                 .builder()
                 .message("option added to product successfully")
                 .data(productService.addOption(id, optionDTO))

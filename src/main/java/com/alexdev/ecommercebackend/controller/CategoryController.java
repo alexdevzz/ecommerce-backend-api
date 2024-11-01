@@ -2,8 +2,8 @@ package com.alexdev.ecommercebackend.controller;
 
 import com.alexdev.ecommercebackend.exceptions.EmptyException;
 import com.alexdev.ecommercebackend.model.dto.CategoryDTO;
-import com.alexdev.ecommercebackend.payload.ListMessageResponse;
-import com.alexdev.ecommercebackend.payload.MessageResponse;
+import com.alexdev.ecommercebackend.payload.ListEntityResponse;
+import com.alexdev.ecommercebackend.payload.EntityResponse;
 import com.alexdev.ecommercebackend.service.CategoryService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class CategoryController {
 
     @PostMapping("")
     public ResponseEntity<?> create(@Valid @RequestBody CategoryDTO categoryDTO) {
-        return new ResponseEntity<>(MessageResponse
+        return new ResponseEntity<>(EntityResponse
                 .builder()
                 .message("category created successfully")
                 .data(categoryService.create(categoryDTO))
@@ -36,7 +36,7 @@ public class CategoryController {
 
     @PutMapping("{id}")
     public ResponseEntity<?> update(@Valid @RequestBody CategoryDTO categoryDTO, @PathVariable int id) {
-        return new ResponseEntity<>(MessageResponse
+        return new ResponseEntity<>(EntityResponse
                 .builder()
                 .message("category updated successfully")
                 .data(categoryService.update(id, categoryDTO))
@@ -46,7 +46,7 @@ public class CategoryController {
 
     @DeleteMapping("{id}")
     public ResponseEntity<?> delete(@PathVariable int id) {
-        return new ResponseEntity<>(MessageResponse
+        return new ResponseEntity<>(EntityResponse
                 .builder()
                 .message("category deleted successfully")
                 .data(categoryService.delete(id))
@@ -60,7 +60,7 @@ public class CategoryController {
         if (listCategoryDTO.isEmpty()) {
             throw new EmptyException("No categories found");
         }
-        return new ResponseEntity<>(ListMessageResponse
+        return new ResponseEntity<>(ListEntityResponse
                 .builder()
                 .message("categories retrieved successfully")
                 .sort(pageable.getSort().toString())
@@ -74,7 +74,7 @@ public class CategoryController {
 
     @GetMapping("{id}")
     public ResponseEntity<?> getCategory(@PathVariable int id) {
-        return new ResponseEntity<>(MessageResponse
+        return new ResponseEntity<>(EntityResponse
                 .builder()
                 .message("category retrieved successfully")
                 .data(categoryService.getCategoryDTO(id))

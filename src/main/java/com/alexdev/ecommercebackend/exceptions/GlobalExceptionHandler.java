@@ -9,6 +9,7 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.HandlerMethodValidationException;
 
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.HashMap;
@@ -17,6 +18,30 @@ import java.util.NoSuchElementException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler(value = HandlerMethodValidationException.class)
+    public ResponseEntity<?> handleMethodArgumentNotValidException(HandlerMethodValidationException e) {
+
+        Map<String, String> mapErrors = new HashMap<>();
+
+        e.getAllErrors().forEach((error) -> {
+            String fieldName;
+            try {
+                fieldName = ((FieldError) error).getField();
+
+            } catch (ClassCastException ex) {
+                fieldName = "";
+            }
+            String message = error.getDefaultMessage();
+            mapErrors.put(fieldName, message);
+        });
+        return new ResponseEntity<>(ErrorResponse.builder()
+                .status(HttpStatus.BAD_REQUEST.value())
+                .type(HttpStatus.BAD_REQUEST.getReasonPhrase())
+                .errors(mapErrors)
+                .build()
+                , HttpStatus.BAD_REQUEST);
+    }
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     public ResponseEntity<?> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
@@ -100,5 +125,20 @@ public class GlobalExceptionHandler {
                 .errors(mapErrors)
                 .build()
                 , HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(value = ResponseException.class)
+    public ResponseEntity<?> handleResponseException(ResponseException e) {
+
+        Map<String, String> mapErrors = new HashMap<>();
+
+        mapErrors.put("error", e.getMessage());
+
+        return new ResponseEntity<>(ErrorResponse.builder()
+                .status(HttpStatus.NOT_ACCEPTABLE.value())
+                .type(HttpStatus.NOT_ACCEPTABLE.getReasonPhrase())
+                .errors(mapErrors)
+                .build()
+                , HttpStatus.NOT_ACCEPTABLE);
     }
 }

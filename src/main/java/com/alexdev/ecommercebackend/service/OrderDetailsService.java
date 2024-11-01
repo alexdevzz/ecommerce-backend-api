@@ -1,6 +1,7 @@
 package com.alexdev.ecommercebackend.service;
 
 
+import com.alexdev.ecommercebackend.model.dto.InputOrderDetailsDTO;
 import com.alexdev.ecommercebackend.model.dto.OrderDetailsDTO;
 import org.springframework.data.domain.Pageable;
 
@@ -10,7 +11,7 @@ public interface OrderDetailsService {
 
     List<OrderDetailsDTO> getOrdersDetails(Pageable pageable);
 
-    OrderDetailsDTO save(OrderDetailsDTO orderDetailsDTO);
+    List<OrderDetailsDTO> create(int idOrder, List<InputOrderDetailsDTO> inputOrderDetailsDTOList);
 
     OrderDetailsDTO update(int id, OrderDetailsDTO orderDetailsDTO);
 
@@ -20,5 +21,8 @@ public interface OrderDetailsService {
 
     boolean existsByid(int id);
 
+    boolean existsByIdOrderAndIdProduct(int idOrder, int idProduct);
+
     int count();
+
 }

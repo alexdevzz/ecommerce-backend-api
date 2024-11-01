@@ -2,8 +2,8 @@ package com.alexdev.ecommercebackend.controller;
 
 import com.alexdev.ecommercebackend.exceptions.EmptyException;
 import com.alexdev.ecommercebackend.model.dto.OrderDetailsDTO;
-import com.alexdev.ecommercebackend.payload.ListMessageResponse;
-import com.alexdev.ecommercebackend.payload.MessageResponse;
+import com.alexdev.ecommercebackend.payload.ListEntityResponse;
+import com.alexdev.ecommercebackend.payload.EntityResponse;
 import com.alexdev.ecommercebackend.service.OrderDetailsService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,18 +22,10 @@ public class OrderDetailsController {
     @Autowired
     private OrderDetailsService orderDetailsService;
 
-    @PostMapping("")
-    public ResponseEntity<?> create(@Valid @RequestBody OrderDetailsDTO orderDetailsDTO) {
-        return new ResponseEntity<>(MessageResponse.builder()
-                .message("order details created successfully")
-                .data(orderDetailsService.save(orderDetailsDTO))
-                .build()
-                , HttpStatus.CREATED);
-    }
 
     @PutMapping("{id}")
     public ResponseEntity<?> update(@PathVariable int id, @Valid @RequestBody OrderDetailsDTO orderDetailsDTO) {
-        return new ResponseEntity<>(MessageResponse.builder()
+        return new ResponseEntity<>(EntityResponse.builder()
                 .message("order details updated successfully")
                 .data(orderDetailsService.update(id, orderDetailsDTO))
                 .build()
@@ -42,7 +34,7 @@ public class OrderDetailsController {
 
     @DeleteMapping("{id}")
     public ResponseEntity<?> delete(@PathVariable int id) {
-        return new ResponseEntity<>(MessageResponse.builder()
+        return new ResponseEntity<>(EntityResponse.builder()
                 .message("order details deleted successfully")
                 .data(orderDetailsService.delete(id))
                 .build()
@@ -51,7 +43,7 @@ public class OrderDetailsController {
 
     @GetMapping("{id}")
     public ResponseEntity<?> getProduct(@PathVariable int id) {
-        return new ResponseEntity<>(MessageResponse.builder()
+        return new ResponseEntity<>(EntityResponse.builder()
                 .message("order details retrieved successfully")
                 .data(orderDetailsService.getOrderDetails(id))
                 .build()
@@ -64,7 +56,7 @@ public class OrderDetailsController {
         if (listOrderDetailsDTO.isEmpty()) {
             throw new EmptyException("No orders details found");
         }
-        return new ResponseEntity<>(ListMessageResponse
+        return new ResponseEntity<>(ListEntityResponse
                 .builder()
                 .message("orders details retrieved successfully")
                 .sort(pageable.getSort().toString())

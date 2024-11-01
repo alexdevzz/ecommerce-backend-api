@@ -13,5 +13,7 @@ public interface OrderDetailsMapper {
 
     List<OrderDetailsDTO> toOrderDetailsDTOs(List<OrderDetails> ordersDetails);
 
+    List<OrderDetails> toOrderDetailsList(List<OrderDetailsDTO> ordersDetailsDTO);
+
     void updateOrderDetails(OrderDetails orderDetails, OrderDetailsDTO orderDetailsDTO);
 }

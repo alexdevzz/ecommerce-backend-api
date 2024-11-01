@@ -20,7 +20,7 @@ public class OrderDTO implements Serializable {
     private int id;
 
     @PositiveOrZero(message = "cannot be under 0")
-    private int ammount;
+    private double ammount;
 
     private String shippingAddress;
 

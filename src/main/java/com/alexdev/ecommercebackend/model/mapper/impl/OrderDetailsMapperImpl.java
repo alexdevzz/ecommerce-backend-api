@@ -54,6 +54,18 @@ public class OrderDetailsMapperImpl implements OrderDetailsMapper {
     }
 
     @Override
+    public List<OrderDetails> toOrderDetailsList(List<OrderDetailsDTO> ordersDetailsDTOList) {
+        if (ordersDetailsDTOList == null) {
+            return null;
+        }
+        List<OrderDetails> orderDetailsList = new ArrayList<>(ordersDetailsDTOList.size());
+        for (OrderDetailsDTO orderDetailsDTO : ordersDetailsDTOList) {
+            orderDetailsList.add(toOrderDetails(orderDetailsDTO));
+        }
+        return orderDetailsList;
+    }
+
+    @Override
     public void updateOrderDetails(OrderDetails orderDetails, OrderDetailsDTO orderDetailsDTO) {
         if (orderDetails == null) {
             return;

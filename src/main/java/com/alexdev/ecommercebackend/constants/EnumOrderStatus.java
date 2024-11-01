@@ -1,10 +1,9 @@
 package com.alexdev.ecommercebackend.constants;
 
-import lombok.Data;
 import lombok.Getter;
 
 @Getter
-public enum OrderStatusEnum {
+public enum EnumOrderStatus {
 
     CREATED("created", 1),
     INVOICED("invoiced", 2),
@@ -22,7 +21,7 @@ public enum OrderStatusEnum {
     private final String name;
     private final int order;
 
-    private OrderStatusEnum (String name, int order) {
+    private EnumOrderStatus(String name, int order) {
         this.name = name;
         this.order = order;
     }

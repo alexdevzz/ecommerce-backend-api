@@ -20,6 +20,8 @@ public interface ProductService {
 
     ProductDTO getProductDTO(int id);
 
+    ProductDTO getProductDTOBySku(String sku);
+
     Product getProduct(int id);
 
     ProductDTO delete(int ProductDTOId);
