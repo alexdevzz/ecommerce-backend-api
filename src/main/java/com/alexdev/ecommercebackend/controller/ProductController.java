@@ -132,4 +132,6 @@ public class ProductController {
                 , HttpStatus.CREATED);
     }
 
+    // TODO: removeCategory
+    // TODO: removeOption
 }

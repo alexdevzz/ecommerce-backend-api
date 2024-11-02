@@ -3,6 +3,8 @@ package com.alexdev.ecommercebackend.model.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -35,4 +37,9 @@ public class Category implements Serializable {
     @ManyToMany(mappedBy = "categories")
     @JsonIgnore
     private List<Product> products;
+
+    @PreRemove
+    private void preRemove() {
+        products.forEach(product -> product.getCategories().remove(this));
+    }
 }

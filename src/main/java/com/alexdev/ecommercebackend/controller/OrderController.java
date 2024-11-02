@@ -96,6 +96,8 @@ public class OrderController{
                 , HttpStatus.CREATED);
     }
 
+    // TODO: removeProducts
+
     @PostMapping("{id}/next_status")
     public ResponseEntity<?> nextStatus(@PathVariable int id) {
 
