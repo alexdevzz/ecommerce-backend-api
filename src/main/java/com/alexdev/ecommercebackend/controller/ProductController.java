@@ -4,6 +4,7 @@ import com.alexdev.ecommercebackend.exceptions.EmptyException;
 import com.alexdev.ecommercebackend.model.dto.CategoryDTO;
 import com.alexdev.ecommercebackend.model.dto.OptionDTO;
 import com.alexdev.ecommercebackend.model.dto.ProductDTO;
+import com.alexdev.ecommercebackend.model.entity.Product;
 import com.alexdev.ecommercebackend.payload.ListEntityResponse;
 import com.alexdev.ecommercebackend.payload.EntityResponse;
 import com.alexdev.ecommercebackend.service.CategoryService;
@@ -18,7 +19,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("products")
@@ -53,10 +56,18 @@ public class ProductController {
 
     @DeleteMapping("{id}")
     public ResponseEntity<?> delete(@PathVariable int id) {
+        ProductDTO productDTOremoved = productService.delete(id);
+
+        Map<String, Object> dataResponse = new HashMap<>();
+        dataResponse.put("sku", productDTOremoved.getSku());
+        dataResponse.put("id", productDTOremoved.getId());
+        dataResponse.put("name", productDTOremoved.getName());
+        dataResponse.put("description", productDTOremoved.getDescription());
+
         return new ResponseEntity<>(EntityResponse
                 .builder()
                 .message("product deleted successfully")
-                .data(productService.delete(id))
+                .data(dataResponse)
                 .build()
                 , HttpStatus.OK);
     }

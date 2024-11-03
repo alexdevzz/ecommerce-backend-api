@@ -3,8 +3,6 @@ package com.alexdev.ecommercebackend.model.entity;
 import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -66,7 +64,6 @@ public class Product implements Serializable {
     @JsonIgnore
     private List<Category> categories;
 
-
     @OneToMany(mappedBy = "product")
     @JsonIgnore
     private List<OrderDetails> ordersDetails;
@@ -75,6 +72,7 @@ public class Product implements Serializable {
     @PreRemove
     private void preRemove() {
         categories.forEach(category -> category.getProducts().remove(this));
+        options.forEach(option -> option.getProducts().remove(this));
     }
 
 

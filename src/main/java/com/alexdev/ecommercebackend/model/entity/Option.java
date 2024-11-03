@@ -34,6 +34,12 @@ public class Option implements Serializable {
     private List<Product> products;
 
 
+    @PreRemove
+    private void preRemove() {
+        products.forEach(product -> product.getOptions().remove(this));
+    }
+
+
 
 
 

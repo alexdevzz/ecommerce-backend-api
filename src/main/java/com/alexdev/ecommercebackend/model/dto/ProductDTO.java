@@ -3,10 +3,7 @@ package com.alexdev.ecommercebackend.model.dto;
 import com.alexdev.ecommercebackend.model.entity.Category;
 import com.alexdev.ecommercebackend.model.entity.Option;
 import com.alexdev.ecommercebackend.model.entity.OrderDetails;
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import jakarta.validation.constraints.*;
 import lombok.Builder;
 import lombok.Data;
@@ -14,6 +11,7 @@ import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @Data
