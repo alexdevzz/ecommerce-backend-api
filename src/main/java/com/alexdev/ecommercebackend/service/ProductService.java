@@ -35,4 +35,7 @@ public interface ProductService {
 
     ProductDTO addOption(int id, OptionDTO optionDTO);
 
+    ProductDTO removeCategory(int id, CategoryDTO categoryDTO);
+
+    ProductDTO removeOption(int id, OptionDTO optionDTO);
 }

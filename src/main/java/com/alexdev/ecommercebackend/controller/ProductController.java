@@ -143,6 +143,24 @@ public class ProductController {
                 , HttpStatus.CREATED);
     }
 
-    // TODO: removeCategory
-    // TODO: removeOption
+    @DeleteMapping("{id}/categories")
+    public ResponseEntity<?> removeCategory(@PathVariable int id, @Valid @RequestBody CategoryDTO categoryDTO) {
+        return new ResponseEntity<>(EntityResponse
+                .builder()
+                .message("category removed from product successfully")
+                .data(productService.removeCategory(id, categoryService.getCategoryDTOByName(categoryDTO.getName().strip())))
+                .build()
+                , HttpStatus.OK);
+    }
+
+    @DeleteMapping("{id}/options")
+    public ResponseEntity<?> removeOption(@PathVariable int id, @Valid @RequestBody OptionDTO optionDTO) {
+        return new ResponseEntity<>(EntityResponse
+                .builder()
+                .message("option removed from product successfully")
+                .data(productService.removeOption(id, optionService.getOptionDTOByName(optionDTO.getName().strip())))
+                .build()
+                , HttpStatus.OK);
+    }
+
 }

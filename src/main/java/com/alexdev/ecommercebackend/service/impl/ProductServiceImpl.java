@@ -1,5 +1,6 @@
 package com.alexdev.ecommercebackend.service.impl;
 
+import com.alexdev.ecommercebackend.exceptions.EmptyException;
 import com.alexdev.ecommercebackend.model.dto.CategoryDTO;
 import com.alexdev.ecommercebackend.model.dto.OptionDTO;
 import com.alexdev.ecommercebackend.model.dto.ProductDTO;
@@ -108,5 +109,25 @@ public class ProductServiceImpl implements ProductService {
         product.getOptions().add(optionMapper.toOption(optionDTO));
 
         return productMapper.toProductDto(productRepository.save(product));
+    }
+
+    @Override
+    public ProductDTO removeCategory(int id, CategoryDTO categoryDTO) {
+        Product product = productRepository.findById(id).get();
+        if (product.getCategories().remove(categoryMapper.toCategory(categoryDTO)))
+            return productMapper.toProductDto(productRepository.save(product));
+        else
+            throw new EmptyException("category not found in product");
+
+    }
+
+    @Override
+    public ProductDTO removeOption(int id, OptionDTO optionDTO) {
+        Product product = productRepository.findById(id).get();
+        if (product.getOptions().remove(optionMapper.toOption(optionDTO)))
+            return productMapper.toProductDto(productRepository.save(product));
+        else
+            throw new EmptyException("option not found in product");
+
     }
 }
