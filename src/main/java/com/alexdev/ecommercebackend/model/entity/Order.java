@@ -45,11 +45,11 @@ public class Order implements Serializable {
     @JsonIgnore
     private Customer customer;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.REMOVE)
     @JsonIgnore
     private List<OrderDetails> ordersDetails;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "fk_order_dates")
     @JsonIgnore
     private OrderDates orderDates;

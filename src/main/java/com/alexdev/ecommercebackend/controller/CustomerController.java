@@ -16,7 +16,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("customers")
@@ -51,9 +53,20 @@ public class CustomerController {
 
     @DeleteMapping("{id}")
     public ResponseEntity<?> delete(@PathVariable int id) {
-        return new ResponseEntity<>(EntityResponse.builder()
+        CustomerDTO customerDTOremoved = customerService.delete(id);
+
+        Map<String, Object> dataResponse = new HashMap<>();
+        dataResponse.put("id", customerDTOremoved.getId());
+        dataResponse.put("name", customerDTOremoved.getName());
+        dataResponse.put("lastName", customerDTOremoved.getLastName());
+        dataResponse.put("phone", customerDTOremoved.getPhone());
+        dataResponse.put("email", customerDTOremoved.getEmail());
+        dataResponse.put("country", customerDTOremoved.getCountry());
+
+        return new ResponseEntity<>(EntityResponse
+                .builder()
                 .message("client deleted successfully")
-                .data(customerService.delete(id))
+                .data(dataResponse)
                 .build()
                 , HttpStatus.OK);
     }

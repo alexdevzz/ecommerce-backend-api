@@ -18,6 +18,8 @@ public interface ProductService {
 
     ProductDTO update(int productId, ProductDTO productDTO);
 
+    ProductDTO subtractStock(int productId, int quantity);
+
     ProductDTO getProductDTO(int id);
 
     ProductDTO getProductDTOBySku(String sku);

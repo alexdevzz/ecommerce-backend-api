@@ -61,6 +61,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public ProductDTO subtractStock(int productId, int quantity) {
+        Product product = productRepository.findById(productId).get();
+        product.setStock(product.getStock() - quantity);
+        return productMapper.toProductDto(productRepository.save(product));
+    }
+
+    @Override
     public ProductDTO getProductDTO(int id) {
         Product product = productRepository.findById(id).get();
         return productMapper.toProductDto(product);

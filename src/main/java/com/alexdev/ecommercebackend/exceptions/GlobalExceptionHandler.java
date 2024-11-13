@@ -133,6 +133,7 @@ public class GlobalExceptionHandler {
         Map<String, String> mapErrors = new HashMap<>();
 
         mapErrors.put("error", e.getMessage());
+        mapErrors.put("param", e.getParam());
 
         return new ResponseEntity<>(ErrorResponse.builder()
                 .status(HttpStatus.NOT_ACCEPTABLE.value())

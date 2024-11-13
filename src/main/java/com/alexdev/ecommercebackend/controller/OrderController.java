@@ -3,10 +3,9 @@ package com.alexdev.ecommercebackend.controller;
 import com.alexdev.ecommercebackend.constants.EnumOrderStatus;
 import com.alexdev.ecommercebackend.exceptions.EmptyException;
 import com.alexdev.ecommercebackend.exceptions.ResponseException;
-import com.alexdev.ecommercebackend.model.dto.InputOrderDetailsDTO;
+import com.alexdev.ecommercebackend.model.dto.AddOrderDetailsDTO;
 import com.alexdev.ecommercebackend.model.dto.OrderDTO;
-import com.alexdev.ecommercebackend.model.dto.OrderDatesDTO;
-import com.alexdev.ecommercebackend.model.entity.OrderDates;
+import com.alexdev.ecommercebackend.model.dto.OrderDetailsDTO;
 import com.alexdev.ecommercebackend.model.mapper.OrderDatesMapper;
 import com.alexdev.ecommercebackend.payload.ListEntityResponse;
 import com.alexdev.ecommercebackend.payload.EntityResponse;
@@ -21,9 +20,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 @RestController
 @RequestMapping("orders")
@@ -50,9 +50,21 @@ public class OrderController{
 
     @DeleteMapping("{id}")
     public ResponseEntity<?> delete(@PathVariable int id) {
+        OrderDTO orderDTOremoved = orderService.delete(id);
+
+        Map<String, Object> dataResponse = new HashMap<>();
+        dataResponse.put("id", orderDTOremoved.getId());
+        dataResponse.put("ammount", orderDTOremoved.getAmmount());
+        dataResponse.put("shippingAddress", orderDTOremoved.getShippingAddress());
+        dataResponse.put("orderAddress", orderDTOremoved.getOrderAddress());
+        dataResponse.put("orderEmail", orderDTOremoved.getOrderEmail());
+        dataResponse.put("orderStatus", orderDTOremoved.getOrderStatus());
+        dataResponse.put("sku", orderDTOremoved.getSku());
+        dataResponse.put("customer", orderDTOremoved.getCustomer());
+
         return new ResponseEntity<>(EntityResponse.builder()
                 .message("order deleted successfully")
-                .data(orderService.delete(id))
+                .data(dataResponse)
                 .build()
                 , HttpStatus.OK);
     }
@@ -85,18 +97,42 @@ public class OrderController{
     }
 
     @PostMapping("{id}/products")
-    public ResponseEntity<?> addProducts(@PathVariable int id,@Valid @RequestBody List<InputOrderDetailsDTO> inputOrderDetailsDTOList) {
-
+    public ResponseEntity<?> addProducts(@PathVariable int id, @Valid @RequestBody List<AddOrderDetailsDTO> addOrderDetailsDTOList) {
+        orderDetailsService.create(id, addOrderDetailsDTOList);
         return new ResponseEntity<>(EntityResponse
                 .builder()
-                .count(inputOrderDetailsDTOList.size())
+                .count(addOrderDetailsDTOList.size())
                 .message("products added successfully")
-                .data(orderDetailsService.create(id, inputOrderDetailsDTOList))
+                .data(orderService.getOrderDTO(id))
                 .build()
                 , HttpStatus.CREATED);
     }
 
-    // TODO: removeProducts
+    @DeleteMapping("{id}/products")
+    public ResponseEntity<?> removeProducts(@PathVariable int id, @RequestBody List<String> productsSku) {
+        List<OrderDetailsDTO> orderDetailsDTOList = orderDetailsService.delete(id, productsSku);
+
+        List<Map<String, Object>> dataResponse = new ArrayList<>();
+        for (OrderDetailsDTO orderDetailsDTO : orderDetailsDTOList) {
+            Map<String, Object> data = new HashMap<>();
+            data.put("id", orderDetailsDTO.getId());
+            data.put("price", orderDetailsDTO.getPrice());
+            data.put("quantity", orderDetailsDTO.getQuantity());
+            data.put("productSku", orderDetailsDTO.getProduct().getSku());
+            data.put("productName", orderDetailsDTO.getProduct().getName());
+            data.put("productDescription", orderDetailsDTO.getProduct().getDescription());
+            data.put("orderSku", orderDetailsDTO.getOrder().getSku());
+            dataResponse.add(data);
+        }
+
+        return new ResponseEntity<>(EntityResponse
+                .builder()
+                .count(-1)
+                .message("products removed successfully")
+                .data(dataResponse)
+                .build()
+                , HttpStatus.OK);
+    }
 
     @PostMapping("{id}/next_status")
     public ResponseEntity<?> nextStatus(@PathVariable int id) {
