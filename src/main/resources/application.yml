@@ -1,0 +1,57 @@
+spring:
+  application:
+    name: ecommerce-backend
+  jackson:
+    time-zone: America/Havana
+  servlet:
+    multipart:
+      max-request-size: 10MB
+      max-file-size: 5MB
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 4516*
+    url: jdbc:mysql://127.0.0.1:3306/db_ecommerce_spring
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+server:
+  port: 8092
+  servlet:
+    context-path: /api/v1
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui-custom.html
+    operations-sorter: method
+    filter: true
+    default-models-expand-depth: 1
+    syntax-highlight:
+      theme: agate
+  api-docs:
+    path: /api-docs
+    version: openapi_3_0
+
+open_api:
+  tittle: eCommerce API
+  description: Basic e-commerce API for the management and administration of virtual stores
+  contact:
+    name: AlexDev
+    email: alexdev.workenv@gmail.com
+  servers:
+    local:
+      url: http://localhost:8092/api/v1
+      description: Local Enviroment
+    production:
+      url: none
+      description: Productive Enviroment
+
+
+

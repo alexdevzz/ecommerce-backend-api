@@ -8,6 +8,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.HandlerMethodValidationException;
 
@@ -20,6 +21,7 @@ import java.util.NoSuchElementException;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = HandlerMethodValidationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<?> handleMethodArgumentNotValidException(HandlerMethodValidationException e) {
 
         Map<String, String> mapErrors = new HashMap<>();
@@ -44,6 +46,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<?> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
 
         Map<String, String> mapErrors = new HashMap<>();
@@ -68,6 +71,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(value = NoSuchElementException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<?> handleNoResourceFoundException(NoSuchElementException e) {
 
         Map<String, String> mapErrors = new HashMap<>();
@@ -83,6 +87,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
+    @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     public ResponseEntity<?> handleNoResourceFoundException(HttpRequestMethodNotSupportedException e) {
 
         Map<String, String> mapErrors = new HashMap<>();
@@ -98,6 +103,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(value = SQLIntegrityConstraintViolationException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
     public ResponseEntity<?> handleNoResourceFoundException(SQLIntegrityConstraintViolationException e) {
 
         Map<String, String> mapErrors = new HashMap<>();
@@ -105,14 +111,15 @@ public class GlobalExceptionHandler {
         mapErrors.put("unique_error", e.getMessage().split(" for key ")[0]);
 
         return new ResponseEntity<>(ErrorResponse.builder()
-                .status(HttpStatus.NOT_ACCEPTABLE.value())
-                .type(HttpStatus.NOT_ACCEPTABLE.getReasonPhrase())
+                .status(HttpStatus.CONFLICT.value())
+                .type(HttpStatus.CONFLICT.getReasonPhrase())
                 .errors(mapErrors)
                 .build()
-                , HttpStatus.NOT_ACCEPTABLE);
+                , HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(value = EmptyException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<?> handleNoResourceFoundException(EmptyException e) {
 
         Map<String, String> mapErrors = new HashMap<>();
@@ -128,6 +135,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(value = ResponseException.class)
+    @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
     public ResponseEntity<?> handleResponseException(ResponseException e) {
 
         Map<String, String> mapErrors = new HashMap<>();

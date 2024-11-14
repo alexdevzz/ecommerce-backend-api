@@ -32,15 +32,6 @@ public class OrderDetailsController {
                 , HttpStatus.CREATED);
     }
 
-    @DeleteMapping("{id}")
-    public ResponseEntity<?> delete(@PathVariable int id) {
-        return new ResponseEntity<>(EntityResponse.builder()
-                .message("order details deleted successfully")
-                .data(orderDetailsService.delete(id))
-                .build()
-                , HttpStatus.OK);
-    }
-
     @GetMapping("{id}")
     public ResponseEntity<?> getProduct(@PathVariable int id) {
         return new ResponseEntity<>(EntityResponse.builder()

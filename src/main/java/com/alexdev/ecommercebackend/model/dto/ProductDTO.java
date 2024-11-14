@@ -4,6 +4,7 @@ import com.alexdev.ecommercebackend.model.entity.Category;
 import com.alexdev.ecommercebackend.model.entity.Option;
 import com.alexdev.ecommercebackend.model.entity.OrderDetails;
 import com.fasterxml.jackson.annotation.JsonGetter;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 import lombok.Builder;
 import lombok.Data;

@@ -24,35 +24,6 @@ public class OrderDatesController {
     private OrderDatesService orderDatesService;
 
 
-    @PostMapping("")
-    public ResponseEntity<?> create(@Valid @RequestBody OrderDatesDTO orderDatesDTO) {
-        return new ResponseEntity<>(EntityResponse.builder()
-                .message("order dates created successfully")
-                .data(orderDatesService.create(orderDatesDTO))
-                .build()
-                , HttpStatus.CREATED);
-    }
-
-    @PutMapping("{id}")
-    public ResponseEntity<?> update(@PathVariable int id, @Valid @RequestBody OrderDatesDTO orderDatesDTO) {
-        return new ResponseEntity<>(EntityResponse
-                .builder()
-                .message("order dates updated successfully")
-                .data(orderDatesService.update(id, orderDatesDTO))
-                .build()
-                , HttpStatus.CREATED);
-    }
-
-    @DeleteMapping("{id}")
-    public ResponseEntity<?> delete(@PathVariable int id) {
-        return new ResponseEntity<>(EntityResponse
-                .builder()
-                .message("order dates deleted successfully")
-                .data(orderDatesService.delete(id))
-                .build()
-                , HttpStatus.OK);
-    }
-
     @GetMapping("{id}")
     public ResponseEntity<?> getOrderDates(@PathVariable int id) {
         return new ResponseEntity<>(EntityResponse
