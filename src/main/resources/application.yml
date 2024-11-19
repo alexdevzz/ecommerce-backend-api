@@ -13,6 +13,7 @@ spring:
     username: root
     password: 4516*
     url: jdbc:mysql://127.0.0.1:3306/db_ecommerce_spring
+
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
@@ -40,6 +41,7 @@ springdoc:
     version: openapi_3_0
 
 open_api:
+  version_api: 1.0.0
   tittle: eCommerce API
   description: Basic e-commerce API for the management and administration of virtual stores
   contact:

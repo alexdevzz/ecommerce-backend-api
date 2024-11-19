@@ -5,6 +5,8 @@ import com.alexdev.ecommercebackend.model.dto.OrderDatesDTO;
 import com.alexdev.ecommercebackend.payload.ListEntityResponse;
 import com.alexdev.ecommercebackend.payload.EntityResponse;
 import com.alexdev.ecommercebackend.service.OrderDatesService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@Tag(name = "Order Dates", description = "Operations allowed on the orderDates entity")
 @RequestMapping("order_dates")
 public class OrderDatesController {
 
@@ -24,6 +27,7 @@ public class OrderDatesController {
     private OrderDatesService orderDatesService;
 
 
+    @Operation(summary = "Shows a order dates from an ID")
     @GetMapping("{id}")
     public ResponseEntity<?> getOrderDates(@PathVariable int id) {
         return new ResponseEntity<>(EntityResponse
@@ -34,6 +38,7 @@ public class OrderDatesController {
                 , HttpStatus.OK);
     }
 
+    @Operation(summary = "Show all order dates")
     @GetMapping("")
     public ResponseEntity<?> getAllOrdersDates(@PageableDefault(page = 0, size = 10, sort = "creationDate", direction = Sort.Direction.DESC) Pageable pageable) {
         List<OrderDatesDTO> listOrderDatesDTO = orderDatesService.getOrdersDates(pageable);

@@ -5,6 +5,8 @@ import com.alexdev.ecommercebackend.model.dto.OrderDetailsDTO;
 import com.alexdev.ecommercebackend.payload.ListEntityResponse;
 import com.alexdev.ecommercebackend.payload.EntityResponse;
 import com.alexdev.ecommercebackend.service.OrderDetailsService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@Tag(name = "Order Products", description = "Operations allowed on the orderDetails entity")
 @RequestMapping("order_details")
 public class OrderDetailsController {
 
@@ -23,6 +26,7 @@ public class OrderDetailsController {
     private OrderDetailsService orderDetailsService;
 
 
+    @Operation(summary = "Update a product into the current order")
     @PutMapping("{id}")
     public ResponseEntity<?> update(@PathVariable int id, @Valid @RequestBody OrderDetailsDTO orderDetailsDTO) {
         return new ResponseEntity<>(EntityResponse.builder()
@@ -32,6 +36,7 @@ public class OrderDetailsController {
                 , HttpStatus.CREATED);
     }
 
+    @Operation(summary = "Shows a product of the order from an ID")
     @GetMapping("{id}")
     public ResponseEntity<?> getProduct(@PathVariable int id) {
         return new ResponseEntity<>(EntityResponse.builder()
@@ -41,6 +46,7 @@ public class OrderDetailsController {
                 , HttpStatus.OK);
     }
 
+    @Operation(summary = "Show all product of the order")
     @GetMapping("")
     public ResponseEntity<?> getAllProducts(@PageableDefault(page = 0, size = 10) Pageable pageable) {
         List<OrderDetailsDTO> listOrderDetailsDTO = orderDetailsService.getOrdersDetails(pageable);
@@ -58,4 +64,5 @@ public class OrderDetailsController {
                 .build()
                 , HttpStatus.OK);
     }
+
 }

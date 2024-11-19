@@ -18,6 +18,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
@@ -43,10 +44,6 @@ public class ProductController {
 
 
     @Operation(summary = "Create a new product")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Product Created Successfully",
-                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProductDTO.class)) }),
-    })
     @PostMapping("")
     public ResponseEntity<?> create(@Valid @RequestBody ProductDTO productDTO) {
         return new ResponseEntity<>(EntityResponse.builder()
@@ -57,10 +54,6 @@ public class ProductController {
     }
 
     @Operation(summary = "Update a existing product from an ID")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Product Updated Successfully",
-                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProductDTO.class)) }),
-    })
     @PutMapping("{id}")
     public ResponseEntity<?> update(@PathVariable int id, @Valid @RequestBody ProductDTO productDTO) {
         return new ResponseEntity<>(EntityResponse
@@ -72,10 +65,6 @@ public class ProductController {
     }
 
     @Operation(summary = "Delete a existing product from an ID (Deleting the product does not delete the option or the category)")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Product Deleted Successfully",
-                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProductDTO.class)) }),
-    })
     @DeleteMapping("{id}")
     public ResponseEntity<?> delete(@PathVariable int id) {
         ProductDTO productDTOremoved = productService.delete(id);
@@ -95,10 +84,6 @@ public class ProductController {
     }
 
     @Operation(summary = "Shows a product from an ID")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Product Retrived Successfully",
-                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProductDTO.class)) }),
-    })
     @GetMapping("{id}")
     public ResponseEntity<?> getProduct(@PathVariable int id) {
         return new ResponseEntity<>(EntityResponse
@@ -110,10 +95,6 @@ public class ProductController {
     }
 
     @Operation(summary = "Show all products")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Products Retrived Successfully",
-                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProductDTO[].class)) }),
-    })
     @GetMapping("")
     public ResponseEntity<?> getAllProducts(@PageableDefault(page = 0, size = 10, sort = "creationDate", direction = Direction.DESC) Pageable pageable) {
         List<ProductDTO> listProductDTO = productService.getProductsDTO(pageable);
@@ -134,10 +115,6 @@ public class ProductController {
 
 
     @Operation(summary = "Add a product to a category (If the category has not been created, it will be created)")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Category Added to Product Successfully",
-                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProductDTO.class)) }),
-    })
     @PostMapping("{id}/categories")
     public ResponseEntity<?> addCategory(@PathVariable int id, @Valid @RequestBody CategoryDTO categoryDTO) {
 
@@ -160,10 +137,6 @@ public class ProductController {
     }
 
     @Operation(summary = "Add a product to a option (If the option has not been created, it will be created)")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Option Added to Product Successfully",
-                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProductDTO.class)) }),
-    })
     @PostMapping("{id}/options")
     public ResponseEntity<?> addOption(@PathVariable int id, @Valid @RequestBody OptionDTO optionDTO) {
 
@@ -186,10 +159,6 @@ public class ProductController {
     }
 
     @Operation(summary = "Remove a product from a category")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Category removed from Product Successfully",
-                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProductDTO.class)) }),
-    })
     @DeleteMapping("{id}/categories")
     public ResponseEntity<?> removeCategory(@PathVariable int id, @Valid @RequestBody CategoryDTO categoryDTO) {
         return new ResponseEntity<>(EntityResponse
@@ -201,10 +170,6 @@ public class ProductController {
     }
 
     @Operation(summary = "Remove a product from a option")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Option removed from Product Successfully",
-                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProductDTO.class)) }),
-    })
     @DeleteMapping("{id}/options")
     public ResponseEntity<?> removeOption(@PathVariable int id, @Valid @RequestBody OptionDTO optionDTO) {
         return new ResponseEntity<>(EntityResponse

@@ -12,6 +12,8 @@ import com.alexdev.ecommercebackend.payload.EntityResponse;
 import com.alexdev.ecommercebackend.service.OrderDatesService;
 import com.alexdev.ecommercebackend.service.OrderDetailsService;
 import com.alexdev.ecommercebackend.service.OrderService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -26,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@Tag(name = "Orders", description = "Operations allowed on the order entity")
 @RequestMapping("orders")
 public class OrderController{
 
@@ -39,6 +42,7 @@ public class OrderController{
     private OrderDatesMapper orderDatesMapper;
 
 
+    @Operation(summary = "Update a new order")
     @PutMapping("{id}")
     public ResponseEntity<?> update(@PathVariable int id, @Valid @RequestBody OrderDTO orderDTO) {
         return new ResponseEntity<>(EntityResponse.builder()
@@ -48,6 +52,7 @@ public class OrderController{
                 , HttpStatus.CREATED);
     }
 
+    @Operation(summary = "Delete a existing order from an ID (Deleting the order also deletes all orderDetails and orderDates)")
     @DeleteMapping("{id}")
     public ResponseEntity<?> delete(@PathVariable int id) {
         OrderDTO orderDTOremoved = orderService.delete(id);
@@ -69,6 +74,7 @@ public class OrderController{
                 , HttpStatus.OK);
     }
 
+    @Operation(summary = "Shows a order from an ID")
     @GetMapping("{id}")
     public ResponseEntity<?> getOrder(@PathVariable int id) {
         return new ResponseEntity<>(EntityResponse.builder()
@@ -78,6 +84,7 @@ public class OrderController{
                 , HttpStatus.OK);
     }
 
+    @Operation(summary = "Show all orders")
     @GetMapping("")
     public ResponseEntity<?> getAllOrders(@PageableDefault(page = 0, size = 10) Pageable pageable) {
         List<OrderDTO> listOrderDTO = orderService.getOrdersDTO(pageable);
@@ -96,6 +103,7 @@ public class OrderController{
                 , HttpStatus.OK);
     }
 
+    @Operation(summary = "Add a product to a order by ID")
     @PostMapping("{id}/products")
     public ResponseEntity<?> addProducts(@PathVariable int id, @Valid @RequestBody List<AddOrderDetailsDTO> addOrderDetailsDTOList) {
         orderDetailsService.create(id, addOrderDetailsDTOList);
@@ -108,6 +116,7 @@ public class OrderController{
                 , HttpStatus.CREATED);
     }
 
+    @Operation(summary = "Remove a product to a order by ID")
     @DeleteMapping("{id}/products")
     public ResponseEntity<?> removeProducts(@PathVariable int id, @RequestBody List<String> productsSku) {
         List<OrderDetailsDTO> orderDetailsDTOList = orderDetailsService.delete(id, productsSku);
@@ -134,6 +143,7 @@ public class OrderController{
                 , HttpStatus.OK);
     }
 
+    @Operation(summary = "Advance to the next state (after performing this operation, you cannot add or delete products)")
     @PostMapping("{id}/next_status")
     public ResponseEntity<?> nextStatus(@PathVariable int id) {
 

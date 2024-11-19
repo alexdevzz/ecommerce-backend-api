@@ -7,6 +7,8 @@ import com.alexdev.ecommercebackend.payload.EntityResponse;
 import com.alexdev.ecommercebackend.service.CustomerService;
 import com.alexdev.ecommercebackend.service.OrderDetailsService;
 import com.alexdev.ecommercebackend.service.OrderService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@Tag(name = "Customers", description = "Operations allowed on the customer entity")
 @RequestMapping("customers")
 public class CustomerController {
 
@@ -32,6 +35,7 @@ public class CustomerController {
     private OrderDetailsService orderDetailsService;
 
 
+    @Operation(summary = "Create a new customer")
     @PostMapping("")
     public ResponseEntity<?> create(@Valid @RequestBody CustomerDTO customerDTO) {
         return new ResponseEntity<>(EntityResponse.builder()
@@ -41,6 +45,7 @@ public class CustomerController {
                 , HttpStatus.CREATED);
     }
 
+    @Operation(summary = "Update a new customer")
     @PutMapping("{id}")
     public ResponseEntity<?> update(@Valid @RequestBody CustomerDTO customerDTO, @PathVariable int id) {
         return new ResponseEntity<>(EntityResponse.builder()
@@ -51,6 +56,7 @@ public class CustomerController {
 
     }
 
+    @Operation(summary = "Delete a existing customer from an ID (Deleting the customer also deletes all related orders)")
     @DeleteMapping("{id}")
     public ResponseEntity<?> delete(@PathVariable int id) {
         CustomerDTO customerDTOremoved = customerService.delete(id);
@@ -71,6 +77,7 @@ public class CustomerController {
                 , HttpStatus.OK);
     }
 
+    @Operation(summary = "Shows a customer from an ID")
     @GetMapping("{id}")
     public ResponseEntity<?> getCustomer(@PathVariable int id) {
         return new ResponseEntity<>(EntityResponse.builder()
@@ -80,6 +87,7 @@ public class CustomerController {
                 , HttpStatus.OK);
     }
 
+    @Operation(summary = "Show all customers")
     @GetMapping("")
     public ResponseEntity<?> getAllCustomers(@PageableDefault(page = 0, size = 10, sort = "creationDate", direction = Sort.Direction.DESC) Pageable pageable) {
         List<CustomerDTO> listCustomerDTO = customerService.getCustomersDTO(pageable);
@@ -99,6 +107,7 @@ public class CustomerController {
     }
 
 
+    @Operation(summary = "Add a order to a customer by ID")
     @PostMapping("{id}/orders")
     public ResponseEntity<?> addOrder(@PathVariable int id, @Valid @RequestBody OrderDTO orderDTO) {
         return new ResponseEntity<>(EntityResponse
