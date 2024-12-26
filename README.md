@@ -1,11 +1,10 @@
-# Ecommerce Backend API
+# Ecommerce Backend API <img src="https://github.com/user-attachments/assets/85abb686-eebf-4dce-aebb-1e833ea9d0df" alt="React" width="30" height="30">
 ![Version](https://img.shields.io/badge/version-1.0.0-blue)
 ![Static Badge](https://img.shields.io/badge/build-in_deploy-red)
 ![GitHub License](https://img.shields.io/github/license/alexdevzz/ecommerce-backend-api?color=gren)
 ![GitHub Created At](https://img.shields.io/github/created-at/alexdevzz/ecommerce-backend-api)
 ![GitHub top language](https://img.shields.io/github/languages/top/alexdevzz/ecommerce-backend-api?color=purple)
-
-
+![Framework](https://img.shields.io/badge/framework-Spring-gren)
 
 ## Description
 This project is a simplified REST API developed in Spring framework that allows the management of products and orders of a virtual store with ease.
