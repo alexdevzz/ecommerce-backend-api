@@ -1,9 +1,10 @@
 # Ecommerce Backend API
 ![Version](https://img.shields.io/badge/version-1.0.0-blue)
 ![Static Badge](https://img.shields.io/badge/build-in_deploy-red)
-![Licencia](https://img.shields.io/badge/license-MIT-green)
+![GitHub License](https://img.shields.io/github/license/alexdevzz/ecommerce-backend-api?color=gren)
 ![GitHub Created At](https://img.shields.io/github/created-at/alexdevzz/ecommerce-backend-api)
-![GitHub top language](https://img.shields.io/github/languages/top/alexdevzz/ecommerce-backend-api)
+![GitHub top language](https://img.shields.io/github/languages/top/alexdevzz/ecommerce-backend-api?color=purple)
+
 
 
 ## Description
