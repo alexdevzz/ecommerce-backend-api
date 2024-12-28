@@ -59,7 +59,8 @@ This project is a simplified REST API developed in Spring framework that allows 
 
 8. Ready !!!
 
-## Database Diagram
+## ER Diagram
+Here is the Entity-Relationship diagram generated using https://dbdiagram.io/
 ![Alt text](src/main/resources/bd_diagram.png)
 
 
