@@ -42,11 +42,12 @@ This project is a simplified REST API developed in Spring framework that allows 
 3. Open the project in your favorite IDE
    
 4. Go to ```application.yml``` and adjust the database parameters in ```datasource``` (In order to run the application without errors you must have the database previously created, even if it is empty)
+ 
    ![imagen](https://github.com/user-attachments/assets/ae90c13c-7846-443e-b448-c9bab1d37034)
    
-5. Go to ```pom.xml``` and then, check and update maven dependencies
+6. Go to ```pom.xml``` and then, check and update maven dependencies
    
-6. Then you must compile the Spring Boot application. To do this you must position yourself at the root of the project and package the application using the next command in your console:
+7. Then you must compile the Spring Boot application. To do this you must position yourself at the root of the project and package the application using the next command in your console:
    ``` bash
    mvnw package
    ```
@@ -61,6 +62,7 @@ This project is a simplified REST API developed in Spring framework that allows 
 
 ## ER Diagram
 Here is the Entity-Relationship diagram generated using https://dbdiagram.io/
+
 ![Alt text](src/main/resources/bd_diagram.png)
 
 
